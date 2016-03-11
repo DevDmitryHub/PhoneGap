@@ -14,6 +14,8 @@
 - [Change Log](https://github.com/DevDmitryHub/cordova-plugin-appsflyer/releases)
 
 **Note:** integrated AppsFlyer SDK has restrictions for iOS archs (armv7, arm64, **not** _armv7s_) it's fixed since v.3.3.3
+**Update:** But in my opinion, the best solution right now is using plugin v.3.3.1 (before update AF-iOS-SDK). So if you have any problem with v.3.3.3, try to use v.3.3.1
+
 
 
 ## Installation
