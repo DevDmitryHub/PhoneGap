@@ -17,6 +17,7 @@
 
 **Update:** But in my opinion, the best solution right now is using plugin v.3.3.1 (before update AF-iOS-SDK). So if you have any problem with v.3.3.3, try to use v.3.3.1
 
+Plugin was updated by AF to v.4.x with updated AF-Android-SDK & AF-iOS-SDK.
 
 
 ## Installation
@@ -43,7 +44,7 @@ Mind the path:
 For more details about manual installation see wiki page [Manual Installation](https://github.com/DevDmitryHub/cordova-plugin-appsflyer/wiki/Manual-installation) or use author's [page](https://github.com/AppsFlyerSDK/PhoneGap#manual-installation).
 
 ### PhoneGap Build
-Built against Phonegap >= 3.3.x.
+Built against Phonegap >= 4.3.x.
 
 Add the following line to your config xml:
 
