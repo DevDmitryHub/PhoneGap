@@ -10,4 +10,5 @@
 - (void)sendTrackingWithEvent:(CDVInvokedUrlCommand*)command;
 - (void)onConversionDataReceived:(NSDictionary*) installData;
 - (void)onConversionDataRequestFailure:(NSError *) error;
+- (void)trackEvent:(CDVInvokedUrlCommand*)command;
 @end

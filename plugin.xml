@@ -21,7 +21,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-appsflyer"
-        version="3.3.3">
+        version="3.3.4">
     <name>AppsFlyer</name>
     <description>Cordova plugin for integration with AppsFlyer SDK. It's a fork of the official version from AppsFlyer.</description>
     <license>Apache 2.0</license>
@@ -29,7 +29,7 @@
     <repo>https://github.com/DevDmitryHub/cordova-plugin-appsflyer.git</repo>
 
     <engines>
-        <engine name="cordova" version=">=3.3.0"/>
+        <engine name="cordova" version=">=4.3.0"/>
     </engines>
 
 	<js-module src="www/appsflyer.js" name="appsflyer">
@@ -58,7 +58,7 @@
         </config-file>
 
         <source-file src="platform/android/com/appsflyer/cordova/plugin/AppsFlyerPlugin.java" target-dir="src/com/appsflyer/cordova/plugin" />
-        <source-file src="platform/android/libs/AF-Android-SDK-v3.3.0.jar" target-dir="libs"/>
+        <source-file src="platform/android/libs/AF-Android-SDK-v4.3.2.jar" target-dir="libs"/>
 
         <framework src="com.google.android.gms:play-services-ads:+" />
     </platform>
