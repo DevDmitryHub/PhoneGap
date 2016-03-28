@@ -96,10 +96,10 @@ campaigns/media-sources. Please take the time define the event/s you would like 
 to track ROI (Return on Investment) and LTV (Lifetime Value).*
 - *The “trackEvent” method allows you to send in-app events to AppsFlyer analytics. This method allows you to 
 add events dynamically by adding them directly to the application code.*
-
-- Rich In App Events Tracking API (optional)
+- Rich In App Events Tracking API (optional).
 AppsFlyer’s rich in­app events provide advertisers with the ability to track any post­install event and attribute it to a media source and campaign.
 An in­app event is comprised of an event name and event parameters
+
 ###### Example:
 ```javascript
 var eventName = "af_add_to_cart";
