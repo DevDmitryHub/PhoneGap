@@ -5,7 +5,7 @@
 
 - (CDVPlugin *)initWithWebView:(UIWebView *)theWebView
 {
-    self = (AppsFlyerPlugin *)[super initWithWebView:theWebView];
+    [self pluginInitialize];
     return self;
 }
 
@@ -16,17 +16,14 @@
     }
     
     NSString* devKey = [command.arguments objectAtIndex:0];
-    NSString* appId = [command.arguments objectAtIndex:1];
-    
+    NSString* appId = [command.arguments objectAtIndex:1];    
     
     [AppsFlyerTracker sharedTracker].appleAppID = appId;
     [AppsFlyerTracker sharedTracker].appsFlyerDevKey = devKey;
-    [[AppsFlyerTracker sharedTracker] trackAppLaunch];
-    [self performSelector:@selector(initDelegate) withObject:nil afterDelay:7];
-}
-
-- (void) initDelegate{
+    [AppsFlyerTracker sharedTracker].isDebug = YES;
     [AppsFlyerTracker sharedTracker].delegate = self;
+    [[AppsFlyerTracker sharedTracker] trackAppLaunch];
+    
 }
 
 - (void)setCurrencyCode:(CDVInvokedUrlCommand*)command
@@ -87,6 +84,14 @@
     
     NSLog(@"%@",error);
     
+}
+
+- (void)trackEvent:(CDVInvokedUrlCommand*)command {
+
+    NSString* eventName = [command.arguments objectAtIndex:0];
+    NSDictionary* eventValues = [command.arguments objectAtIndex:1];
+    [[AppsFlyerTracker sharedTracker] trackEvent:eventName withValues:eventValues];
+
 }
 
 @end

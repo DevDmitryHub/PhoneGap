@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="libs">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/com.google.playservices/helloworld-google-play-services_lib/libs/google-play-services.jar!/" />
+      <root url="jar://$PROJECT_DIR$/com.google.playservices/helloworld-google-play-services_lib/libs/google-play-services_Old.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

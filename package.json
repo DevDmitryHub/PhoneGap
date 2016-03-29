@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-appsflyer",
-  "version": "3.3.3",
+  "version": "4.0.1",
   "description": "Cordova plugin for integration with AppsFlyer SDK. It's a fork of the official version from AppsFlyer.",
   "cordova": {
     "id": "cordova-plugin-appsflyer",

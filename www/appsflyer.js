@@ -108,10 +108,6 @@ if(!window.CustomEvent) {
         []);
 	};
 	
-	AppsFlyer.prototype.sendTrackingWithEvent = function(eventName, eventValue) {
-    	platform.exec(null, null, "AppsFlyerPlugin", "sendTrackingWithEvent", [eventName,eventValue]);
-	};
-
 	AppsFlyer.prototype.trackEvent = function(eventName, eventValue) {
     	platform.exec(null, null, "AppsFlyerPlugin", "trackEvent", [eventName,eventValue]);
 	};

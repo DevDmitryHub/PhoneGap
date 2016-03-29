@@ -15,6 +15,10 @@
 
 **Note:** integrated AppsFlyer SDK has restrictions for iOS archs (armv7, arm64, **not** _armv7s_) it's fixed since v.3.3.3
 
+**Update:** But in my opinion, the best solution right now is using plugin v.3.3.1 (before update AF-iOS-SDK). So if you have any problem with v.3.3.3, try to use v.3.3.1
+
+Plugin was updated by AF to v.4.x with updated AF-Android-SDK & AF-iOS-SDK.
+
 
 ## Installation
 
@@ -40,7 +44,7 @@ Mind the path:
 For more details about manual installation see wiki page [Manual Installation](https://github.com/DevDmitryHub/cordova-plugin-appsflyer/wiki/Manual-installation) or use author's [page](https://github.com/AppsFlyerSDK/PhoneGap#manual-installation).
 
 ### PhoneGap Build
-Built against Phonegap >= 3.3.x.
+Built against Phonegap >= 4.3.x.
 
 Add the following line to your config xml:
 
@@ -50,7 +54,6 @@ Add the following line to your config xml:
 
 ## Usage API
  
-
 #### 1\. Set your App_ID (iOS only), Dev_Key and enable AppsFlyer to detect installations, sessions (app opens), and updates.  
 **Note:** *This is the minimum requirement to start tracking your app installs and it's already implemented in this plugin. You **_MUST_** modify this call and provide:*
 
@@ -93,16 +96,11 @@ campaigns/media-sources. Please take the time define the event/s you would like 
 to track ROI (Return on Investment) and LTV (Lifetime Value).*
 - *The “trackEvent” method allows you to send in-app events to AppsFlyer analytics. This method allows you to 
 add events dynamically by adding them directly to the application code.*
-```javascript
-// eventName - any string to define the event name. For example: “registration” or “purchase”
-// eventValue - the sales value. For example: 0.99 or 0.79
-window.plugins.appsFlyer.sendTrackingWithEvent(eventName, eventValue);
-// window.plugins.appsFlyer.sendTrackingWithEvent(eventName, "");
-```
-##### 4\.1 Rich In App Events Tracking API (optional)
+- Rich In App Events Tracking API (optional).
 AppsFlyer’s rich in­app events provide advertisers with the ability to track any post­install event and attribute it to a media source and campaign.
 An in­app event is comprised of an event name and event parameters
 
+###### Example:
 ```javascript
 var eventName = "af_add_to_cart";
 var eventValues = {"af_content_id": "id123", "af_currency":"USD", "af_revenue": "2"};
@@ -110,10 +108,6 @@ window.plugins.appsFlyer.trackEvent(eventName, eventValues);
 ```
 #### 5\. Get AppsFlyer’s Unique Device UID (Advanced)
 *Get AppsFlyer’s proprietary device ID. AppsFlyer device ID is the main ID used by AppsFlyer in the Reports and API’s.*
-```javascript
-// getUserIdCallbackFn - callback function
-window.plugins.appsFlyer.getAppsFlyerUID(getUserIdCallbackFn);
-```
 ###### Example:
 ```javascript
 var getUserIdCallbackFn = function(id) {
