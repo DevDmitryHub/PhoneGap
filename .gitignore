@@ -2,3 +2,38 @@
 test/.idea/**
 test/android/.idea/**
 *.class
+test/platforms/android/.gradle/2.2.1/taskArtifacts/cache.properties
+test/platforms/android/.gradle/2.2.1/taskArtifacts/cache.properties.lock
+test/platforms/android/.gradle/2.2.1/taskArtifacts/fileHashes.bin
+test/platforms/android/.gradle/2.2.1/taskArtifacts/fileSnapshots.bin
+test/platforms/android/.gradle/2.2.1/taskArtifacts/outputFileStates.bin
+test/platforms/android/.gradle/2.2.1/taskArtifacts/taskArtifacts.bin
+test/platforms/android/.idea/.name
+test/platforms/android/.idea/compiler.xml
+test/platforms/android/.idea/copyright/profiles_settings.xml
+test/platforms/android/.idea/encodings.xml
+test/platforms/android/.idea/gradle.xml
+test/platforms/android/.idea/libraries/AF_Android_SDK.xml
+test/platforms/android/.idea/misc.xml
+test/platforms/android/.idea/modules.xml
+test/platforms/android/.idea/runConfigurations.xml
+test/platforms/android/CordovaLib/CordovaLib.iml
+test/platforms/android/CordovaLib/build/intermediates/bundles/debug/AndroidManifest.xml
+test/platforms/android/CordovaLib/build/intermediates/bundles/debug/aapt/AndroidManifest.xml
+test/platforms/android/CordovaLib/build/intermediates/bundles/debug/classes.jar
+test/platforms/android/CordovaLib/build/intermediates/incremental/compileDebugAidl/dependency.store
+test/platforms/android/CordovaLib/build/intermediates/incremental/compileDebugAndroidTestAidl/dependency.store
+test/platforms/android/CordovaLib/build/intermediates/incremental/mergeDebugAndroidTestAssets/merger.xml
+test/platforms/android/CordovaLib/build/intermediates/incremental/mergeDebugAndroidTestResources/merger.xml
+test/platforms/android/CordovaLib/build/intermediates/incremental/mergeDebugAssets/merger.xml
+test/platforms/android/CordovaLib/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml
+test/platforms/android/CordovaLib/build/intermediates/incremental/packageDebugResources/merger.xml
+test/platforms/android/CordovaLib/build/intermediates/manifest/androidTest/debug/AndroidManifest.xml
+test/platforms/android/CordovaLib/build/intermediates/res/resources-debug-androidTest.ap_
+test/platforms/android/CordovaLib/build/outputs/aar/CordovaLib-debug.aar
+test/platforms/android/android.iml
+test/platforms/ios/AppsFlyer Phonegap.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+test/platforms/ios/AppsFlyer Phonegap.xcodeproj/xcuserdata/golan.xcuserdatad/xcschemes/AppsFlyer Phonegap.xcscheme
+test/platforms/ios/AppsFlyer Phonegap.xcodeproj/xcuserdata/golan.xcuserdatad/xcschemes/xcschememanagement.plist
+test/platforms/ios/CordovaLib/CordovaLib.xcodeproj/xcuserdata/golan.xcuserdatad/xcschemes/CordovaLib.xcscheme
+test/platforms/ios/CordovaLib/CordovaLib.xcodeproj/xcuserdata/golan.xcuserdatad/xcschemes/xcschememanagement.plist

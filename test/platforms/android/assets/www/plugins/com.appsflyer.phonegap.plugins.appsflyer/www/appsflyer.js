@@ -1,4 +1,5 @@
-cordova.define("com.appsflyer.phonegap.plugins.appsflyer.appsflyer", function(require, exports, module) { if(!window.CustomEvent) {
+cordova.define("com.appsflyer.phonegap.plugins.appsflyer.appsflyer", function(require, exports, module) {
+if(!window.CustomEvent) {
 	window.CustomEvent = function(type, config) {
 		var e = document.createEvent("CustomEvent");
 		e.initCustomEvent(type, true, true, config.detail);
@@ -31,8 +32,8 @@ cordova.define("com.appsflyer.phonegap.plugins.appsflyer.appsflyer", function(re
         []);
 	};
 	
-	AppsFlyer.prototype.sendTrackingWithEvent = function(eventName, eventValue) {
-    	cordova.exec(null, null, "AppsFlyerPlugin", "sendTrackingWithEvent", [eventName,eventValue]);
+	AppsFlyer.prototype.trackEvent = function(eventName, eventValue) {
+    	cordova.exec(null, null, "AppsFlyerPlugin", "trackEvent", [eventName,eventValue]);
 	};
 
 	AppsFlyer.prototype.onInstallConversionDataLoaded = function(conversionData) {

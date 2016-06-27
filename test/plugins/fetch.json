@@ -1,4 +1,13 @@
 {
+    "com.appsflyer.phonegap.plugins.appsflyer": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/AppsFlyerSDK/PhoneGap.git",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
     "cordova-plugin-whitelist": {
         "source": {
             "type": "registry",
@@ -7,20 +16,10 @@
         "is_top_level": true,
         "variables": {}
     },
-    "com.appsflyer.phonegap.plugins.appsflyer": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/AppsFlyerSDK/PhoneGap.git",
-            "subdir": ".",
-            "ref": "new_version"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "com.google.playservices": {
+    "cordova-plugin-googleplayservices": {
         "source": {
             "type": "registry",
-            "id": "com.google.playservices"
+            "id": "cordova-plugin-googleplayservices"
         },
         "is_top_level": false,
         "variables": {}

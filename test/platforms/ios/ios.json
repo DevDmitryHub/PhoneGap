@@ -1,0 +1,43 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {
+            "config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"AppsFlyerPlugin\"><param name=\"ios-package\" value=\"AppsFlyerPlugin\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "installed_plugins": {
+        "com.appsflyer.phonegap.plugins.appsflyer": {
+            "PACKAGE_NAME": "pg.appsflyer.sampleapp"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "pg.appsflyer.sampleapp"
+        }
+    },
+    "dependent_plugins": {},
+    "modules": [
+        {
+            "file": "plugins/com.appsflyer.phonegap.plugins.appsflyer/www/appsflyer.js",
+            "id": "com.appsflyer.phonegap.plugins.appsflyer.appsflyer",
+            "pluginId": "com.appsflyer.phonegap.plugins.appsflyer",
+            "clobbers": [
+                "window.plugins.appsFlyer"
+            ]
+        }
+    ],
+    "plugin_metadata": {
+        "com.appsflyer.phonegap.plugins.appsflyer": "4.0",
+        "cordova-plugin-whitelist": "1.2.1"
+    }
+}

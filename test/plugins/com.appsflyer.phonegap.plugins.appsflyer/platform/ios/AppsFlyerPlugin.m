@@ -20,11 +20,11 @@
     
     [AppsFlyerTracker sharedTracker].appleAppID = appId;
     [AppsFlyerTracker sharedTracker].appsFlyerDevKey = devKey;
+    [AppsFlyerTracker sharedTracker].delegate = self;
     [AppsFlyerTracker sharedTracker].isDebug = YES;
-    [AppsFlyerTracker sharedTracker].delegate = self;   
     [[AppsFlyerTracker sharedTracker] trackAppLaunch];
-
-}
+    
+  }
 
 - (void)setCurrencyCode:(CDVInvokedUrlCommand*)command
 {
@@ -74,10 +74,19 @@
                                             error:&error];
     if (jsonData) {
         NSString *JSONString = [[NSString alloc] initWithBytes:[jsonData bytes] length:[jsonData length] encoding:NSUTF8StringEncoding];
-        [[super webView] stringByEvaluatingJavaScriptFromString: [NSString stringWithFormat:@"javascript:window.plugins.appsFlyer.onInstallConversionDataLoaded(%@)", JSONString]];
+        
+        [self performSelectorOnMainThread:@selector(reportConversionData:) withObject:JSONString waitUntilDone:NO];
+        NSLog(@"JSONString = %@",JSONString);
+
     } else {
         NSLog(@"%@",error);
     }
+}
+
+-(void) reportConversionData:(NSString *)data {
+    
+    [[super webViewEngine] evaluateJavaScript:[NSString stringWithFormat:@"javascript:window.plugins.appsFlyer.onInstallConversionDataLoaded(%@)", data] completionHandler:nil];
+
 }
 
 -(void)onConversionDataRequestFailure:(NSError *) error {

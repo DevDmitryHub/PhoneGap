@@ -25,6 +25,7 @@ public class AppsFlyerPlugin extends CordovaPlugin {
 
 	@Override
 	public boolean execute(final String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+        Log.d("AppsFlyer", "Executing...");
 		if("setCurrencyCode".equals(action))
 		{
 			setCurrencyCode(args);
@@ -54,14 +55,20 @@ public class AppsFlyerPlugin extends CordovaPlugin {
 
 		return false;
 	}
+    private void trackAppLaunch(){
+        Context c = this.cordova.getActivity().getApplicationContext();
+        AppsFlyerLib.getInstance().trackEvent(c, null, null);
+    }
 
 	private void initSdk(JSONArray parameters, final CallbackContext callbackContext) {
+        Log.d("AppsFlyer", "Starting Tracking");
+        trackAppLaunch();
 		String devKey = null;
 		try
 		{
 			devKey = parameters.getString(0);
 			if(devKey != null){
-				AppsFlyerLib.getInstance().init(cordova.getActivity(), devKey);
+				AppsFlyerLib.getInstance().startTracking(this.cordova.getActivity().getApplication(), devKey);
 			}
 		}
 		catch (JSONException e)
@@ -212,6 +219,6 @@ public class AppsFlyerPlugin extends CordovaPlugin {
 			return;
 		}
 		Context c = this.cordova.getActivity().getApplicationContext();
-		AppsFlyerLib.getInstance().setGCMProjectID(c, gcmProjectId);
+		AppsFlyerLib.getInstance().setGCMProjectNumber(gcmProjectId);
 	}
 }

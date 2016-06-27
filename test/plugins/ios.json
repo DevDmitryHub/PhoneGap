@@ -4,41 +4,14 @@
         "uninstalled": []
     },
     "config_munge": {
-        "files": {
-            "framework": {
-                "parents": {
-                    "AdSupport.framework": [
-                        {
-                            "xml": true,
-                            "count": 1
-                        }
-                    ],
-                    "iAd.framework": [
-                        {
-                            "xml": true,
-                            "count": 1
-                        }
-                    ]
-                }
-            },
-            "config.xml": {
-                "parents": {
-                    "/*": [
-                        {
-                            "xml": "<feature name=\"AppsFlyerPlugin\"><param name=\"ios-package\" value=\"AppsFlyerPlugin\" /></feature>",
-                            "count": 1
-                        }
-                    ]
-                }
-            }
-        }
+        "files": {}
     },
     "installed_plugins": {
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.phonegap.helloworld"
-        },
         "com.appsflyer.phonegap.plugins.appsflyer": {
-            "PACKAGE_NAME": "com.phonegap.helloworld"
+            "PACKAGE_NAME": "pg.appsflyer.sampleapp"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "pg.appsflyer.sampleapp"
         }
     },
     "dependent_plugins": {}
