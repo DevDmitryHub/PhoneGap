@@ -3,8 +3,9 @@ if(!window.CustomEvent) {
 		var e = document.createEvent("CustomEvent");
 		e.initCustomEvent(type, true, true, config.detail);
 		return e;
-	}
+	};
 }
+
 (function (global) {
 	var AppsFlyer;
 	AppsFlyer = function () {
@@ -13,11 +14,11 @@ if(!window.CustomEvent) {
 	AppsFlyer.prototype.initSdk = function (args) {
     	cordova.exec(null, null, "AppsFlyerPlugin", "initSdk", args);
 	};
-	
+
 	AppsFlyer.prototype.setCurrencyCode = function (currencyId) {
     	cordova.exec(null, null, "AppsFlyerPlugin", "setCurrencyCode", [currencyId]);
 	};
-	
+
 	AppsFlyer.prototype.setAppUserId = function (customerUserId) {
     	cordova.exec(null, null, "AppsFlyerPlugin", "setAppUserId", [customerUserId]);
 	};
@@ -30,7 +31,7 @@ if(!window.CustomEvent) {
            "getAppsFlyerUID",
         []);
 	};
-	
+
 	AppsFlyer.prototype.trackEvent = function(eventName, eventValue) {
     	cordova.exec(null, null, "AppsFlyerPlugin", "trackEvent", [eventName,eventValue]);
 	};
@@ -48,7 +49,7 @@ if(!window.CustomEvent) {
 	global.cordova.addConstructor(function() {
 		if (!global.Cordova) {
 			global.Cordova = global.cordova;
-		};
+		}
 
 		if (!global.plugins) {
 			global.plugins = {};
@@ -63,11 +64,10 @@ if(!window.CustomEvent) {
 //    var devKey = "xxXXXXXxXxXXXXxXXxxxx8";  // your AppsFlyer devKey
 //    args.push(devKey);
 //    var userAgent = window.navigator.userAgent.toLowerCase();
-//                          
+//
 //    if (/iphone|ipad|ipod/.test( userAgent )) {
 //        var appId = "123456789";            // your ios app id in app store
 //        args.push(appId);
 //    }
 //	window.plugins.appsFlyer.initSdk(args);
 //}, false);
-
