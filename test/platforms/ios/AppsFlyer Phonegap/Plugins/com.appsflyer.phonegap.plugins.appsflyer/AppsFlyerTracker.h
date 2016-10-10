@@ -2,8 +2,7 @@
 //  AppsFlyerTracker.h
 //  AppsFlyerLib
 //
-//  AppsFlyer iOS SDK v4.4.1
-//  13-Apr-2016
+//  AppsFlyer iOS SDK v4.5.7
 //  Copyright (c) 2013 AppsFlyer Ltd. All rights reserved.
 //
 
@@ -32,6 +31,7 @@
 #define AFEventUpdate                   @"af_update"
 #define AFEventOpenedFromPushNotification @"af_opened_from_push_notification"
 #define AFEventLocation                 @"af_location_coordinates"
+#define AFEventOrderId                  @"af_order_id"
 
 // In app event parameter names
 #define AFEventParamLevel                  @"af_level"
@@ -98,6 +98,7 @@ typedef enum  {
     BOOL _isDebug;
     BOOL didCollectIAdData;
     BOOL _useReceiptValidationSandbox;
+    BOOL _useUninstallSandbox;
     EmailCryptType emailCryptType;
     NSArray *userEmails;
 }
@@ -168,6 +169,12 @@ typedef enum  {
 @property (nonatomic, setter = setUseReceiptValidationSandbox:) BOOL useReceiptValidationSandbox;
 
 
+/*
+ * Set this flag to test uninstall on Apple environment (production or sandbox). The default value
+ * is NO.
+ */
+@property (nonatomic, setter = setUseUninstallSandbox:) BOOL useUninstallSandbox;
+
 
 /*
  * Use this to send the User's emails
@@ -207,12 +214,11 @@ typedef enum  {
 /*
 * To Track location for geo-fencing.
 */
+- (void) trackLocation:(double) longitude latitude:(double) latitude;
 
--(void) trackLocation:(double) longitude latitude:(double) latitude;
 /*
  * This method returns AppsFLyer's internal user ID (unique for your app)
  */
-
 - (NSString *) getAppsFlyerUID;
 
 /* 
@@ -229,15 +235,28 @@ typedef enum  {
 /*
  * In case you want to track deep linking, call this method from your delegate's openURL method with refferer.
  */
-- (void) handleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication withAnnotation:(id) annotation;
+- (void) handleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication withAnnotation:(id) annotation __attribute__((deprecated));
 
+
+- (void) handleOpenUrl:(NSURL *) url options:(NSDictionary *)options;
 /* 
  * For Universal links iOS 9
  */
 
--(void) continueUserActivity:(NSUserActivity *) userActivity restorationHandler:(void (^)(NSArray *))restorationHandler NS_AVAILABLE_IOS(9_0);
--(void) didUpdateUserActivity:(NSUserActivity *)userActivity NS_AVAILABLE_IOS(9_0);
--(void) handlePushNotification:(NSDictionary *) pushPayload;
+- (BOOL) continueUserActivity:(NSUserActivity *) userActivity restorationHandler:(void (^)(NSArray *))restorationHandler NS_AVAILABLE_IOS(9_0);
+- (void) didUpdateUserActivity:(NSUserActivity *)userActivity NS_AVAILABLE_IOS(9_0);
+- (void) handlePushNotification:(NSDictionary *) pushPayload;
+
+
+/* 
+  Register uninstall - you should register for remote notification and provide Appsflyer the push device token.
+*/
+- (void) registerUninstall:(NSData *) deviceToken;
+
+/*
+ Get SDK version.
+*/
+- (NSString *) getSDKVersion;
 
 
 @end
