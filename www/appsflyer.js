@@ -15,9 +15,9 @@
     (function (global) {
         var AppsFlyer = function () {};
 
-        AppsFlyer.prototype.initSdk = function (args) {
-            argscheck.checkArgs('A', 'AppsFlyer.initSdk', arguments);
-            exec(null, null, "AppsFlyerPlugin", "initSdk", args);
+        AppsFlyer.prototype.initSdk = function (args, successCB, errorCB) {
+            argscheck.checkArgs('O', 'AppsFlyer.initSdk', arguments);
+            exec(successCB, errorCB, "AppsFlyerPlugin", "initSdk", [args]);
         };
 
         AppsFlyer.prototype.setCurrencyCode = function (currencyId) {

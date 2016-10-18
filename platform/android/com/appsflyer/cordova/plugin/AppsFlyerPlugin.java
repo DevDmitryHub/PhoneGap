@@ -60,34 +60,55 @@ public class AppsFlyerPlugin extends CordovaPlugin {
         AppsFlyerLib.getInstance().trackEvent(c, null, null);
     }
 
-	private void initSdk(JSONArray parameters, final CallbackContext callbackContext) {
-        Log.d("AppsFlyer", "Starting Tracking");
-        trackAppLaunch();
+	/**
+	 * TODO: all hardcoded error strings should be defined as const strings or enum
+	 * @param args
+	 * @param callbackContext
+     */
+	private void initSdk(JSONArray args, final CallbackContext callbackContext) {
+
 		String devKey = null;
-		try
-		{
-			devKey = parameters.getString(0);
-			if(devKey != null){
-				AppsFlyerLib.getInstance().startTracking(this.cordova.getActivity().getApplication(), devKey);
+		boolean isDebug;
+		AppsFlyerLib instance = AppsFlyerLib.getInstance();
+
+
+		try{
+			final JSONObject options = args.getJSONObject(0);
+
+			devKey = options.optString("devKey", "");
+
+			if(devKey.trim().equals("")){
+				callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, "No 'devKey' found or its empty"));
+				return;
 			}
+
+			isDebug = options.optBoolean("isDebug", true);
+
+			instance.setDebugLog(isDebug);
+
+			if(isDebug == true){ Log.d("AppsFlyer", "Starting Tracking");}
+			trackAppLaunch();
+
+			instance.startTracking(this.cordova.getActivity().getApplication(), devKey);
+
+
+			callbackContext.success("Success");
 		}
-		catch (JSONException e)
-		{
+		catch (JSONException e){
 			e.printStackTrace();
 			return;
 		}
 
-		AppsFlyerLib.getInstance().registerConversionListener(cordova.getActivity().getApplicationContext(), new AppsFlyerConversionListener(){
+		instance.registerConversionListener(cordova.getActivity().getApplicationContext(), new AppsFlyerConversionListener(){
 
 			@Override
 			public void onAppOpenAttribution(Map<String, String> arg0) {
-				// TODO Auto-generated method stub
-
+				//@TODO callback to cordova
 			}
 
 			@Override
 			public void onAttributionFailure(String errorMessage) {
-				//Added this to avoid compilation failure
+				//@TODO callback to cordova
 			}
 
 			@Override
@@ -107,12 +128,9 @@ public class AppsFlyerPlugin extends CordovaPlugin {
 
 			@Override
 			public void onInstallConversionFailure(String arg0) {
-				// TODO Auto-generated method stub
-
+				//@TODO callback to cordova
 			}
-
 		});
-
 	}
 
 	private void trackEvent(JSONArray parameters) {

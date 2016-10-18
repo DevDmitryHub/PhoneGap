@@ -11,19 +11,62 @@
 
 - (void)initSdk:(CDVInvokedUrlCommand*)command
 {
-    if ([command.arguments count] < 2) {
+    NSString* callbackId = command.callbackId;
+    
+    if (!command.arguments || ![command.arguments count]){
+        
+        CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"No options found"];
+        [self.commandDelegate sendPluginResult:result callbackId:callbackId];
         return;
     }
     
-    NSString* devKey = [command.arguments objectAtIndex:0];
-    NSString* appId = [command.arguments objectAtIndex:1];    
+    NSDictionary* initSdkOptions = [command argumentAtIndex:0 withDefault:[NSNull null]];
     
-    [AppsFlyerTracker sharedTracker].appleAppID = appId;
-    [AppsFlyerTracker sharedTracker].appsFlyerDevKey = devKey;
-    [AppsFlyerTracker sharedTracker].delegate = self;
-    [AppsFlyerTracker sharedTracker].isDebug = YES;
-    [[AppsFlyerTracker sharedTracker] trackAppLaunch];
+    NSString* devKey = nil;
+    NSString* appId = nil;
+    BOOL isDebug = YES;
     
+    if (![initSdkOptions isKindOfClass:[NSNull class]]) {
+        
+        id value = nil;
+        devKey = (NSString*)[initSdkOptions objectForKey:@"devKey"];
+        appId = (NSString*)[initSdkOptions objectForKey:@"appId"];
+        
+        value = [initSdkOptions objectForKey:@"isDebug"];
+        if ([value isKindOfClass:[NSNumber class]]) {
+            // isDebug is a boolean that will come through as an NSNumber
+            isDebug = [(NSNumber*)value boolValue];
+            // NSLog(@"multiple is: %d", multiple);
+        }
+    }
+    
+    NSString* error = nil;
+    
+    if (!devKey || [devKey isEqualToString:@""]) {
+        error = @"No 'devKey' found or its empty";
+    }
+    if (!appId || [appId isEqualToString:@""]) {
+        error = @"No 'appId' found";
+    }
+    
+    
+    if(error != nil){
+        CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: error];
+        [self.commandDelegate sendPluginResult:result callbackId:callbackId];
+        return;
+
+    }
+    else{
+        [AppsFlyerTracker sharedTracker].appleAppID = appId;
+        [AppsFlyerTracker sharedTracker].appsFlyerDevKey = devKey;
+        [AppsFlyerTracker sharedTracker].delegate = self;
+        [AppsFlyerTracker sharedTracker].isDebug = isDebug;
+        [[AppsFlyerTracker sharedTracker] trackAppLaunch];
+        
+        //TODO: connect to static lib success callback
+         CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"Success"];
+        [self.commandDelegate sendPluginResult:result callbackId:callbackId];
+    }
   }
 
 - (void)setCurrencyCode:(CDVInvokedUrlCommand*)command
