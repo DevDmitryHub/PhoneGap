@@ -3,6 +3,11 @@
 
 @implementation AppsFlyerPlugin
 
+
+static NSString *const NO_DEVKEY_FOUND = @"No 'devKey' found or its empty";
+static NSString *const NO_APPID_FOUND  = @"No 'appId' found or its empty";
+static NSString *const SUCCESS         = @"Success";
+
 - (CDVPlugin *)initWithWebView:(UIWebView *)theWebView
 {
     [self pluginInitialize];
@@ -13,13 +18,6 @@
 {
     NSString* callbackId = command.callbackId;
     
-    if (!command.arguments || ![command.arguments count]){
-        
-        CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"No options found"];
-        [self.commandDelegate sendPluginResult:result callbackId:callbackId];
-        return;
-    }
-    
     NSDictionary* initSdkOptions = [command argumentAtIndex:0 withDefault:[NSNull null]];
     
     NSString* devKey = nil;
@@ -29,24 +27,23 @@
     if (![initSdkOptions isKindOfClass:[NSNull class]]) {
         
         id value = nil;
-        devKey = (NSString*)[initSdkOptions objectForKey:@"devKey"];
-        appId = (NSString*)[initSdkOptions objectForKey:@"appId"];
+        devKey = (NSString*)[initSdkOptions objectForKey: afDevKey];
+        appId = (NSString*)[initSdkOptions objectForKey: afAppId];
         
-        value = [initSdkOptions objectForKey:@"isDebug"];
+        value = [initSdkOptions objectForKey: afIsDebug];
         if ([value isKindOfClass:[NSNumber class]]) {
             // isDebug is a boolean that will come through as an NSNumber
             isDebug = [(NSNumber*)value boolValue];
-            // NSLog(@"multiple is: %d", multiple);
         }
     }
     
     NSString* error = nil;
     
     if (!devKey || [devKey isEqualToString:@""]) {
-        error = @"No 'devKey' found or its empty";
+        error = NO_DEVKEY_FOUND;
     }
-    if (!appId || [appId isEqualToString:@""]) {
-        error = @"No 'appId' found";
+    else if (!appId || [appId isEqualToString:@""]) {
+        error = NO_APPID_FOUND;
     }
     
     
@@ -64,7 +61,7 @@
         [[AppsFlyerTracker sharedTracker] trackAppLaunch];
         
         //TODO: connect to static lib success callback
-         CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"Success"];
+         CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:SUCCESS];
         [self.commandDelegate sendPluginResult:result callbackId:callbackId];
     }
   }
