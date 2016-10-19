@@ -23,6 +23,9 @@ import android.os.Build;
 
 public class AppsFlyerPlugin extends CordovaPlugin {
 
+	final static String NO_DEVKEY_FOUND = "No 'devKey' found or its empty";
+	final static String SUCCESS = "Success";
+
 	@Override
 	public boolean execute(final String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         Log.d("AppsFlyer", "Executing...");
@@ -61,7 +64,7 @@ public class AppsFlyerPlugin extends CordovaPlugin {
     }
 
 	/**
-	 * TODO: all hardcoded error strings should be defined as const strings or enum
+	 *
 	 * @param args
 	 * @param callbackContext
      */
@@ -78,7 +81,7 @@ public class AppsFlyerPlugin extends CordovaPlugin {
 			devKey = options.optString("devKey", "");
 
 			if(devKey.trim().equals("")){
-				callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, "No 'devKey' found or its empty"));
+				callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, NO_DEVKEY_FOUND));
 				return;
 			}
 
@@ -92,7 +95,7 @@ public class AppsFlyerPlugin extends CordovaPlugin {
 			instance.startTracking(this.cordova.getActivity().getApplication(), devKey);
 
 
-			callbackContext.success("Success");
+			callbackContext.success(SUCCESS);
 		}
 		catch (JSONException e){
 			e.printStackTrace();
