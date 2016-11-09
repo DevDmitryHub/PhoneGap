@@ -89,11 +89,4 @@
         });
     }(window));
 
-    /*var typeMap = {
-    'A': 'Array',
-    'D': 'Date',
-    'N': 'Number',
-    'S': 'String',
-    'F': 'Function',
-    'O': 'Object'
-};*/
+    
