@@ -1,6 +1,6 @@
 <img src="https://www.appsflyer.com/wp-content/themes/ohav-child/images/logo.svg"  width="200">
 
-# Cordova/PhoneGap AppsFlyer plugin for Android and iOS. (v4.2.4)
+# Cordova/PhoneGap AppsFlyer plugin for Android and iOS. (v4.2.5)
 
 
 
@@ -276,6 +276,29 @@ document.addEventListener('onInstallConversionDataLoaded', function(e){
 }, false);
 ```
 
+
+### Deep linking tracking
+
+#### Android
+In ver. 4.2.5 deep linking metadata (scheme/host) will be send automatically
+
+#### iOS
+
+Open in Xcode `AppDelegate.m`, add `#import "AppsFlyerTracker.h"` and add following method under `application: openURL` :
+
+```objective-c
+[[AppsFlyerTracker sharedTracker] handleOpenURL:url sourceApplication:sourceApplication withAnnotation:annotation];
+```
+
+So it should look like:
+
+```objective-c
+-(BOOL) application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    
+    [[AppsFlyerTracker sharedTracker] handleOpenURL:url sourceApplication:sourceApplication withAnnotation:annotation];
+    return YES;
+}
+```
 
 ---
 
