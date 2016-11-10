@@ -61,14 +61,14 @@ Android: Copy `AppsFlyerPlugin.java` to `platforms/android/src/com/appsflyer/cor
         
 ## Usage:
 
-#### 1\. Set your App_ID (iOS only), Dev_Key and enable AppsFlyer to detect installations, sessions (app opens), and updates.  
-> This is the minimum requirement to start tracking your app installs and it's already implemented in this plugin. You **MUST** modify this call and provide:  
+#### 1\. Set your App_ID (iOS only), Dev_Key and enable AppsFlyer to detect installations, sessions (app opens) and updates.  
+> This is the minimum requirement to start tracking your app installs and is already implemented in this plugin. You **MUST** modify this call and provide:  
  **-devKey** - Your application devKey provided by AppsFlyer.
-**-appId**  - ***For iOS only.*** Your iTunes application id.
+**-appId**  - ***For iOS only.*** Your iTunes Application ID.
 
 
 
-Add following lines to your code to be able to initialize tracking with your own AppsFlyer dev key:
+Add the following lines to your code to be able to initialize tracking with your own AppsFlyer dev key:
 
 **for pure Cordova:**
 ```javascript
@@ -147,6 +147,35 @@ window.plugins.appsFlyer.initSdk(options, onSuccess, onError);
 
 ---
 
+**`trackEvent(eventName, eventValues): void`** (optional)
+
+
+- These in-app events help you track how loyal users discover your app, and attribute them to specific 
+campaigns/media-sources. Please take the time define the event/s you want to measure to allow you 
+to track ROI (Return on Investment) and LTV (Lifetime Value).
+- The `trackEvent` method allows you to send in-app events to AppsFlyer analytics. This method allows you to add events dynamically by adding them directly to the application code.
+
+
+| parameter   | type                        | description |
+| ----------- |-----------------------------|--------------|
+| `eventName` | `String`                    | custom event name, is presented in your dashboard.  See the Event list [HERE](https://github.com/AppsFlyerSDK/PhoneGap/blob/master/platform/ios/AppsFlyerTracker.h)  |
+| `eventValue` | `Object`                    | event details |
+
+*Example:*
+
+```javascript
+var eventName = "af_add_to_cart";
+var eventValues = {
+           "af_content_id": "id123",
+           "af_currency":"USD",
+           "af_revenue": "2"
+           };
+window.plugins.appsFlyer.trackEvent(eventName, eventValues);
+```
+
+---
+
+
 **`setCurrencyCode(currencyId): void`**
 
 
@@ -166,9 +195,9 @@ window.plugins.appsFlyer.setCurrencyCode("GBP"); // British Pound
 **`setAppUserId(customerUserId): void`**
 
 
-Setting your own custom ID will enable you to cross-reference your own unique ID with AppsFlyer’s user ID and the other devices’ IDs. This ID will be available at AppsFlyer CSV reports along with postbacks APIs for cross-referencing with you internal IDs.
+Setting your own Custom ID enables you to cross-reference your own unique ID with AppsFlyer’s user ID and the other devices’ IDs. This ID is available in AppsFlyer CSV reports along with postbacks APIs for cross-referencing with you internal IDs.
  
-**Note:** The ID must be set during the first launch of the app at the SDK initialization. The best practice is to call to this API during `deviceready` event if possible.
+**Note:** The ID must be set during the first launch of the app at the SDK initialization. The best practice is to call this API during the `deviceready` event, where possible.
 
 
 | parameter   | type                        | description |
@@ -204,7 +233,7 @@ AEnables tracking app. uninstalls.
 
 **`getAppsFlyerUID(successCB): void`**  (Advanced)
 
-Get AppsFlyer’s proprietary device ID. AppsFlyer device ID is the main ID used by AppsFlyer in the Reports and API’s.
+Get AppsFlyer’s proprietary Device ID. The AppsFlyer Device ID is the main ID used by AppsFlyer in Reports and APIs.
 
 ```javascript
 function getUserIdCallbackFn(id){/* ... */} 
@@ -226,37 +255,11 @@ window.plugins.appsFlyer.getAppsFlyerUID(getUserIdCallbackFn);
 
 ---
 
-**`trackEvent(eventName, eventValues): void`** (optional)
 
-
-- These in-app events help you track how loyal users discover your app, and attribute them to specific 
-campaigns/media-sources. Please take the time define the event/s you would like to measure to allow you 
-to track ROI (Return on Investment) and LTV (Lifetime Value).
-- The `trackEvent` method allows you to send in-app events to AppsFlyer analytics. This method allows you to add events dynamically by adding them directly to the application code.
-
-
-| parameter   | type                        | description |
-| ----------- |-----------------------------|--------------|
-| `eventName` | `String`                    | custom event name, will be represented in your dashboard. Event list you can see [HERE](https://github.com/AppsFlyerSDK/PhoneGap/blob/master/platform/ios/AppsFlyerTracker.h)  |
-| `eventValue` | `Object`                    | event details |
-
-*Example:*
-
-```javascript
-var eventName = "af_add_to_cart";
-var eventValues = {
-           "af_content_id": "id123",
-           "af_currency":"USD",
-           "af_revenue": "2"
-           };
-window.plugins.appsFlyer.trackEvent(eventName, eventValues);
-```
-
----
 
 **`onInstallConversionDataLoaded(conversionData): void`**
 
-Accessing AppsFlyer Attribution / Conversion Data from the SDK (Deferred Deep-linking). 
+Accessing AppsFlyer Attribution / Conversion Data from the SDK (Deferred Deeplinking). 
  Read more: [Android](http://support.appsflyer.com/entries/69796693-Accessing-AppsFlyer-Attribution-Conversion-Data-from-the-SDK-Deferred-Deep-linking-), [iOS](http://support.appsflyer.com/entries/22904293-Testing-AppsFlyer-iOS-SDK-Integration-Before-Submitting-to-the-App-Store-)  
 **Note:** AppsFlyer plugin will fire `onInstallConversionDataLoaded` event with attribution data. You must implement `onInstallConversionDataLoaded` listener to receive the data.
 
@@ -277,20 +280,20 @@ document.addEventListener('onInstallConversionDataLoaded', function(e){
 ```
 
 
-### Deep linking tracking
+### Deeplinking Tracking
 
 #### Android
-In ver. 4.2.5 deep linking metadata (scheme/host) will be send automatically
+In ver. 4.2.5 deeplinking metadata (scheme/host) is sent automatically
 
 #### iOS
 
-Open in Xcode `AppDelegate.m`, add `#import "AppsFlyerTracker.h"` and add following method under `application: openURL` :
+Open in Xcode `AppDelegate.m`, add `#import "AppsFlyerTracker.h"` and add the following method under `application: openURL` :
 
 ```objective-c
 [[AppsFlyerTracker sharedTracker] handleOpenURL:url sourceApplication:sourceApplication withAnnotation:annotation];
 ```
 
-So it should look like:
+It appears as follows:
 
 ```objective-c
 -(BOOL) application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
@@ -303,4 +306,4 @@ So it should look like:
 ---
 
 ## Sample app:
-We posted [af-cordova-ionic-demo](https://github.com/af-fess/af-cordova-ionic-demo) as separate repo in github, you can download and run it.
+We have posted [af-cordova-ionic-demo](https://github.com/af-fess/af-cordova-ionic-demo) as s separate repo in github, you can download and run it.
