@@ -37,7 +37,6 @@ public class AppsFlyerPlugin extends CordovaPlugin {
 	@Override
 	public void onNewIntent(Intent intent) {
 		cordova.getActivity().setIntent(intent);
-
 		AppsFlyerLib.getInstance().sendDeepLinkData(cordova.getActivity());
 	}
 
