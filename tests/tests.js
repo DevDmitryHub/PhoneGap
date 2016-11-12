@@ -1,11 +1,10 @@
 /* jshint jasmine: true */
+/* global cordova */
 
 exports.defineAutoTests = function () {
 
 var isIOS = cordova.platformId == 'ios';
 var isAndroid = cordova.platformId == 'android';
-
-
 
 
 var AppsFlyerError = {
@@ -14,7 +13,7 @@ var AppsFlyerError = {
     APPID_NOT_VALID: "'appId' is not valid",
     NO_APPID_FOUND: "No 'appId' found or its empty",
     SUCCESS: "Success"
-}
+};
 
 
 var fail = function(done) {
