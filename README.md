@@ -123,7 +123,7 @@ initialize the SDK.
 | parameter   | type                        | description  |
 | ----------- |-----------------------------|--------------|
 | `options`   | `Object`                    |   SDK configuration           |
-| `onSuccess` | `(message: string)=>void` | Success callback - called after successfull SDK initiation. (optional)|
+| `onSuccess` | `(message: string)=>void` | Success callback - called after successfull SDK initialization. (optional)|
 | `onError`   | `(message: string)=>void` | Error callback - called when error occurs during initialization. (optional)|
 
 **`options`**
