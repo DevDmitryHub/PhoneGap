@@ -9,7 +9,7 @@
             var e = document.createEvent("CustomEvent");
             e.initCustomEvent(type, true, true, config.detail);
             return e;
-        }
+        };
     }
 
     (function (global) {
@@ -79,7 +79,6 @@
             if (!global.Cordova) {
                 global.Cordova = global.cordova;
             }
-            ;
 
             if (!global.plugins) {
                 global.plugins = {};
