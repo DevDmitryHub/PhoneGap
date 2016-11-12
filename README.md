@@ -1,6 +1,6 @@
 <img src="https://www.appsflyer.com/wp-content/themes/ohav-child/images/logo.svg"  width="200">
 
-# Cordova/PhoneGap AppsFlyer plugin for Android and iOS. (v4.2.5)
+# Cordova/PhoneGap AppsFlyer plugin for Android and iOS. [![npm version](https://badge.fury.io/js/appsflyer.svg)](https://badge.fury.io/js/appsflyer)
 
 
 
@@ -47,7 +47,6 @@ $ cordova plugin add https://github.com/AppsFlyerSDK/PhoneGap.git
 ```xml
 <uses-permission android:name="android.permission.INTERNET" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-<uses-permission android:name="android.permission.READ_PHONE_STATE" />
 ```
 3\. Copy appsflyer.js to `www/js/plugins` and reference it in `index.html`:
 ```html
@@ -55,9 +54,17 @@ $ cordova plugin add https://github.com/AppsFlyerSDK/PhoneGap.git
 ```
 4\. Download the source files and copy them to your project.
 
-iOS: Copy `AppsFlyerPlugin.h`, `AppsFlyerPlugin.m`, `AppsFlyerTracker.h` and `libAppsFlyerLib.a` to `platforms/ios/<ProjectName>/Plugins`
+#####**iOS:** 
+Copy:
 
-Android: Copy `AppsFlyerPlugin.java` to `platforms/android/src/com/appsflyer/cordova/plugins` (create the folders)
+ - `AppsFlyerPlugin.h`
+ - `AppsFlyerPlugin.m`
+ - `AppsFlyerTracker.h`
+ - `libAppsFlyerLib.a`
+to `platforms/ios/<ProjectName>/Plugins`
+
+#####**Android:** 
+Copy `AppsFlyerPlugin.java` to `platforms/android/src/com/appsflyer/cordova/plugins` (create the folders)
         
 ## Usage:
 
