@@ -1,6 +1,6 @@
 <img src="https://www.appsflyer.com/wp-content/themes/ohav-child/images/logo.svg"  width="200">
 
-# Cordova/PhoneGap AppsFlyer plugin for Android and iOS. [![npm version](https://badge.fury.io/js/appsflyer.svg)](https://badge.fury.io/js/appsflyer)
+# Cordova/PhoneGap AppsFlyer plugin for Android and iOS. [![npm version](https://badge.fury.io/js/appsflyer.svg)](https://badge.fury.io/js/appsflyer) [![Build Status](https://travis-ci.org/AppsFlyerSDK/PhoneGap.svg?branch=master)](https://travis-ci.org/AppsFlyerSDK/PhoneGap)
 
 
 
