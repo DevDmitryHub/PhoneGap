@@ -28,7 +28,7 @@ static NSString *const SUCCESS         = @"Success";
     
     NSString* devKey = nil;
     NSString* appId = nil;
-    BOOL isDebug = YES;
+    BOOL isDebug = NO;
     
     if (![initSdkOptions isKindOfClass:[NSNull class]]) {
         

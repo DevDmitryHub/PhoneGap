@@ -102,7 +102,7 @@ public class AppsFlyerPlugin extends CordovaPlugin {
 				return;
 			}
 
-			isDebug = options.optBoolean("isDebug", true);
+			isDebug = options.optBoolean("isDebug", false);
 
 			instance.setDebugLog(isDebug);
 
