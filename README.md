@@ -132,7 +132,7 @@ initialize the SDK.
 | -----------|---------|---------|------------------------|
 | `devKey`   |`string` |         |   [Appsflyer Dev key](https://support.appsflyer.com/hc/en-us/articles/207032126-AppsFlyer-SDK-Integration-Android)    |
 | `appId`    |`string` |        | [Apple Application ID](https://support.appsflyer.com/hc/en-us/articles/207032066-AppsFlyer-SDK-Integration-iOS) (for iOS only) |
-| `isDebug`  |`boolean`| `true` | debug mode (optional)|
+| `isDebug`  |`boolean`| `false` | debug mode (optional)|
 
 *Example:*
 
@@ -145,7 +145,7 @@ function onError(err) {
     // handle error
 }
 var options = {
-               devKey:  'd3Ac9qPnrpVYZxfWmCspwL',
+               devKey:  'd3Ac9qPardVYZxfWmCspwL',
                appId: '123456789',
                isDebug: false
              };
