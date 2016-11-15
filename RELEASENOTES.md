@@ -1,4 +1,15 @@
 # Release Notes
+### 4.2.7 (Nov 14, 2016)
+* changed isDebug to default false
+* DOCs fixes
+
+### 4.2.6 (Nov 13, 2016)
+* added Travis support
+
+
+### 4.2.4 (Nov 09, 2016)
+* added deep linking tracking section
+
 
 ### 4.2.4 (Oct 26, 2016)
 * fixed README.md
