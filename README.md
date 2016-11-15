@@ -4,7 +4,31 @@
 
 
 
-## Supported Platforms
+## Table of content
+
+- [Supported Platforms](#supported-platforms)
+- [SDK versions](#plugin-build-for)
+- [Installation using CLI](#installation-using-cli)
+- [Manual installation](#manual-installation)
+  - [iOS](#ios)
+  - [Android](#android)
+- [Usage](#usage)
+ - [for pure Cordova](#for-pure-cordova) 
+ - [For Ionic](#for-ionic)
+- [API Methods](#api-methods) 
+ - [initSdk](#initSdk) 
+ - [trackEvent](#trackEvent)
+ - [setCurrencyCode](#setCurrencyCode)
+ - [setAppUserId](#setAppUserId)
+ - [setGCMProjectID](#setGCMProjectID)
+ - [getAppsFlyerUID](#getAppsFlyerUID)
+ - [onInstallConversionDataLoaded](#onInstallConversionDataLoaded)
+- [Deep linking Tracking](#deep-linking-tracking) 
+ - [Android](#dl-android)
+ - [iOS](#dl-ios)
+- [Sample App](#sample-app)  
+
+## Supported Platforms {#supported-platforms}
 
 - Android
 - iOS 8+
@@ -12,7 +36,7 @@
  `Cordova >= 4.3.x.`
 
 
-## This plugin is built for
+### This plugin is built for {#plugin-build-for}
 
 - iOS AppsFlyerSDK **v4.5.9**
 - Android AppsFlyerSDK **v4.6.0**
@@ -77,7 +101,7 @@ Copy `AppsFlyerPlugin.java` to `platforms/android/src/com/appsflyer/cordova/plug
 
 Add the following lines to your code to be able to initialize tracking with your own AppsFlyer dev key:
 
-**for pure Cordova:**
+#####**for pure Cordova:**
 ```javascript
 document.addEventListener("deviceready", function(){
     
@@ -94,7 +118,7 @@ document.addEventListener("deviceready", function(){
 }, false);
 ```
 
-**For Ionic**
+#####**For Ionic**
 
 ```javascript
   $ionicPlatform.ready(function() {      
@@ -112,11 +136,11 @@ document.addEventListener("deviceready", function(){
 ```
 
 
-API Methods
-===================
+##API Methods
+
 ---
 
-**`initSdk(options, onSuccess, onError): void`**
+#####**`initSdk(options, onSuccess, onError): void`** {#initSdk}
 
 initialize the SDK.
 
@@ -154,7 +178,7 @@ window.plugins.appsFlyer.initSdk(options, onSuccess, onError);
 
 ---
 
-**`trackEvent(eventName, eventValues): void`** (optional)
+#####**`trackEvent(eventName, eventValues): void`** (optional) {#trackEvent}
 
 
 - These in-app events help you track how loyal users discover your app, and attribute them to specific 
@@ -183,7 +207,7 @@ window.plugins.appsFlyer.trackEvent(eventName, eventValues);
 ---
 
 
-**`setCurrencyCode(currencyId): void`**
+#####**`setCurrencyCode(currencyId): void`** {#setCurrencyCode}
 
 
 | parameter   | type                  | Default     | description |
@@ -199,7 +223,7 @@ window.plugins.appsFlyer.setCurrencyCode("GBP"); // British Pound
 
 ---
 
-**`setAppUserId(customerUserId): void`**
+#####**`setAppUserId(customerUserId): void`** {#setAppUserId} 
 
 
 Setting your own Custom ID enables you to cross-reference your own unique ID with AppsFlyer’s user ID and the other devices’ IDs. This ID is available in AppsFlyer CSV reports along with postbacks APIs for cross-referencing with you internal IDs.
@@ -219,7 +243,7 @@ window.plugins.appsFlyer.setAppUserId(userId);
 ---
 
 
-**`setGCMProjectID(GCMProjectID): void`**
+#####**`setGCMProjectID(GCMProjectID): void`** {#setGCMProjectID}
 
 Set the GCM API key. AppsFlyer requires a Google Project Number and GCM API Key to enable uninstall tracking.
 
@@ -227,7 +251,7 @@ Set the GCM API key. AppsFlyer requires a Google Project Number and GCM API Key 
 | ----------- |-----------------------------|--------------|
 | `GCMProjectID`   | `String`                      | |
 
-**`registerUninstall(token): void`**
+#####**`registerUninstall(token): void`** {#registerUninstall}
 
 AEnables tracking app. uninstalls.
 
@@ -238,7 +262,7 @@ AEnables tracking app. uninstalls.
 
 ---
 
-**`getAppsFlyerUID(successCB): void`**  (Advanced)
+#####**`getAppsFlyerUID(successCB): void`**  (Advanced) {#getAppsFlyerUID}
 
 Get AppsFlyer’s proprietary Device ID. The AppsFlyer Device ID is the main ID used by AppsFlyer in Reports and APIs.
 
@@ -264,7 +288,7 @@ window.plugins.appsFlyer.getAppsFlyerUID(getUserIdCallbackFn);
 
 
 
-**`onInstallConversionDataLoaded(conversionData): void`**
+#####**`onInstallConversionDataLoaded(conversionData): void`** {#onInstallConversionDataLoaded}
 
 Accessing AppsFlyer Attribution / Conversion Data from the SDK (Deferred Deeplinking). 
  Read more: [Android](http://support.appsflyer.com/entries/69796693-Accessing-AppsFlyer-Attribution-Conversion-Data-from-the-SDK-Deferred-Deep-linking-), [iOS](http://support.appsflyer.com/entries/22904293-Testing-AppsFlyer-iOS-SDK-Integration-Before-Submitting-to-the-App-Store-)  
@@ -287,12 +311,12 @@ document.addEventListener('onInstallConversionDataLoaded', function(e){
 ```
 
 
-### Deeplinking Tracking
+### Deep linking Tracking
 
-#### Android
+#### Android {#dl-android}
 In ver. 4.2.5 deeplinking metadata (scheme/host) is sent automatically
 
-#### iOS
+#### iOS {#dl-ios}
 
 Open in Xcode `AppDelegate.m`, add `#import "AppsFlyerTracker.h"` and add the following method under `application: openURL` :
 
@@ -312,5 +336,5 @@ It appears as follows:
 
 ---
 
-## Sample app:
+## Sample app: {#sample-app}
 We have posted [af-cordova-ionic-demo](https://github.com/af-fess/af-cordova-ionic-demo) as s separate repo in github, you can download and run it.
