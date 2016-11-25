@@ -1,6 +1,6 @@
 {
   "name": "appsflyer",
-  "version": "4.2.8",
+  "version": "4.2.9",
   "description": "Cordova AppsFlyer Plugin",
   "cordova": {
     "id": "com.appsflyer.phonegap.plugins.appsflyer",
