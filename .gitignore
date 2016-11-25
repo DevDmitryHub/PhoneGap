@@ -11,3 +11,6 @@ Thumbs.db
 *.user
 
 node_modules
+
+
+examples/demoAngular/node_modules/

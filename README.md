@@ -225,7 +225,7 @@ window.plugins.appsFlyer.setCurrencyCode("GBP"); // British Pound
 
 ---
 
-#####** <a id="setAppUserId"> `setAppUserId(customerUserId): void`**
+##### <a id="setAppUserId"> **`setAppUserId(customerUserId): void`**
 
 
 Setting your own Custom ID enables you to cross-reference your own unique ID with AppsFlyer’s user ID and the other devices’ IDs. This ID is available in AppsFlyer CSV reports along with postbacks APIs for cross-referencing with you internal IDs.
@@ -245,13 +245,16 @@ window.plugins.appsFlyer.setAppUserId(userId);
 ---
 
 
-#####** <a id="setGCMProjectID"> `setGCMProjectID(GCMProjectID): void`**
+##### <a id="setGCMProjectID"> **`setGCMProjectID(GCMProjectID): void`**
 
 Set the GCM API key. AppsFlyer requires a Google Project Number and GCM API Key to enable uninstall tracking.
 
 | parameter   | type                        | description |
 | ----------- |-----------------------------|--------------|
 | `GCMProjectID`   | `String`                      | |
+
+
+//TBD should be from delegate
 
 ##### <a id="registerUninstall"> **`registerUninstall(token): void`** 
 
@@ -338,5 +341,18 @@ It appears as follows:
 
 ---
 
-## <a id="sample-app"> Sample app:
-We have posted [af-cordova-ionic-demo](https://github.com/af-fess/af-cordova-ionic-demo) as s separate repo in github, you can download and run it.
+##Demo
+
+This plugin has a `examples` folder with `demoAngular` project bundled with it. To give it a try , clone this repo and from root a.e. `PhoneGap` execute the following:
+
+```sh
+npm run setup
+```
+
+  -  `npm run demo.ra` - runs Android
+  -  `demo.ba` - builds Android
+  -  `demo.ri` - runs iOS
+  -  `demo.bi` - builds iOS
+  
+
+![demo printscreen](examples/demo_example.png?raw=true)
