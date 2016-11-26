@@ -2,7 +2,7 @@
 
 # Cordova/PhoneGap AppsFlyer plugin for Android and iOS. [![npm version](https://badge.fury.io/js/appsflyer.svg)](https://badge.fury.io/js/appsflyer) [![Build Status](https://travis-ci.org/AppsFlyerSDK/PhoneGap.svg?branch=master)](https://travis-ci.org/AppsFlyerSDK/PhoneGap)
 
-This repository will be deprecated soon, use [cordova-plugin-appsflyer-sdk](https://github.com/AppsFlyerSDK/cordova-plugin-appsflyer-sdk) because of npm issues
+This repository will be deprecated soon, use [cordova-plugin-appsflyer-sdk on github](https://github.com/AppsFlyerSDK/cordova-plugin-appsflyer-sdk) or [npm cordova-plugin-appsflyer-sdk](https://www.npmjs.com/package/cordova-plugin-appsflyer-sdk)
 
 ## Table of content
 
