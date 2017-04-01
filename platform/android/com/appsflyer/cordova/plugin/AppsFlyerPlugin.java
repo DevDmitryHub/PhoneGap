@@ -219,6 +219,6 @@ public class AppsFlyerPlugin extends CordovaPlugin {
 			return;
 		}
 		Context c = this.cordova.getActivity().getApplicationContext();
-		AppsFlyerLib.getInstance().setGCMProjectNumber(gcmProjectId);
+		AppsFlyerLib.getInstance().setGCMProjectNumber(c, gcmProjectId);
 	}
 }

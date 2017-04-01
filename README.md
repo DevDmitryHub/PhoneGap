@@ -8,7 +8,7 @@
 ## Documentation
 - [Installation](#installation)
 	- [Manual Installation](#manual-installation)
-	- [Phone Gap Build](#phonegap-build)  
+	- [Phone Gap Build](#phonegap-build)
 - [Usage API](#usage-api)
 - [Plugin wiki pages](https://github.com/DevDmitryHub/cordova-plugin-appsflyer/wiki)
 - [Change Log](https://github.com/DevDmitryHub/cordova-plugin-appsflyer/releases)
@@ -31,7 +31,7 @@ Using plugin name (Cordova v.5+):
 	cordova plugin add cordova-plugin-appsflyer
 
 
-For old Cordova versions you should add reference to the plugin script file. 
+For old Cordova versions you should add reference to the plugin script file.
 Then reference `appsflyer.js` in `index.html`, after `cordova.js`/`phonegap.js`.
 Mind the path:
 
@@ -53,7 +53,7 @@ Add the following line to your config xml:
 ```
 
 ## Usage API
- 
+
 #### 1\. Set your App_ID (iOS only), Dev_Key and enable AppsFlyer to detect installations, sessions (app opens), and updates.  
 **Note:** *This is the minimum requirement to start tracking your app installs and it's already implemented in this plugin. You **_MUST_** modify this call and provide:*
 
@@ -115,8 +115,8 @@ var getUserIdCallbackFn = function(id) {
 }
 window.plugins.appsFlyer.getAppsFlyerUID(getUserIdCallbackFn);
 ```
-#### 6\. Accessing AppsFlyer Attribution / Conversion Data from the SDK (Deferred Deep-linking). 
-Read more: [Android](http://support.appsflyer.com/entries/69796693-Accessing-AppsFlyer-Attribution-Conversion-Data-from-the-SDK-Deferred-Deep-linking-), [iOS](http://support.appsflyer.com/entries/22904293-Testing-AppsFlyer-iOS-SDK-Integration-Before-Submitting-to-the-App-Store-)  
+#### 6\. Accessing AppsFlyer Attribution / Conversion Data from the SDK (Deferred Deep-linking).
+Read more: [Android](http://support.appsflyer.com/entries/69796693-Accessing-AppsFlyer-Attribution-Conversion-Data-from-the-SDK-Deferred-Deep-linking-), [iOS](http://support.appsflyer.com/entries/22904293-Testing-AppsFlyer-iOS-SDK-Integration-Before-Submitting-to-the-App-Store-)
 **Note:** AppsFlyer plugin will fire `onInstallConversionDataLoaded` event with attribution data. You must implement listener to receive the data.
 ###### Example:
 ```javascript

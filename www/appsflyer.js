@@ -1,3 +1,4 @@
+cordova.define("com.appsflyer.phonegap.plugins.appsflyer.appsflyer", function(require, exports, module) {
 if(!window.CustomEvent) {
 	window.CustomEvent = function(type, config) {
 		var e = document.createEvent("CustomEvent");
@@ -22,7 +23,12 @@ if(!window.CustomEvent) {
 	AppsFlyer.prototype.setAppUserId = function (customerUserId) {
     	cordova.exec(null, null, "AppsFlyerPlugin", "setAppUserId", [customerUserId]);
 	};
-
+	AppsFlyer.prototype.setGCMProjectID = function (GCMProjectID) {
+    	cordova.exec(null, null, "AppsFlyerPlugin", "setGCMProjectID", [GCMProjectID]);
+	};
+	AppsFlyer.prototype.registerUninstall = function(token){
+		cordova.exec(null, null, "AppsFlyerPlugin", "registerUninstall", [token]);
+	};
 	AppsFlyer.prototype.getAppsFlyerUID = function (callbackFn) {
         cordova.exec(function(result){
             callbackFn(result);

@@ -103,4 +103,17 @@
 
 }
 
+- (void)registerUninstall:(CDVInvokedUrlCommand*)command {
+
+    NSData* token = [command.arguments objectAtIndex:0];
+    NSString *deviceToken = [NSString stringWithFormat:@"%@",token];
+    
+    if(deviceToken!=nil){
+        [[AppsFlyerTracker sharedTracker] registerUninstall:token];
+    }else{
+        NSLog(@"Invalid device token");
+    }
+
+}
+
 @end
