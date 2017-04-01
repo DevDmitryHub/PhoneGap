@@ -1,4 +1,3 @@
-cordova.define("com.appsflyer.phonegap.plugins.appsflyer.appsflyer", function(require, exports, module) {
 if(!window.CustomEvent) {
 	window.CustomEvent = function(type, config) {
 		var e = document.createEvent("CustomEvent");
