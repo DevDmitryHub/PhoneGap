@@ -13,12 +13,12 @@
 - [Plugin wiki pages](https://github.com/DevDmitryHub/cordova-plugin-appsflyer/wiki)
 - [Change Log](https://github.com/DevDmitryHub/cordova-plugin-appsflyer/releases)
 
-**Note:** integrated AppsFlyer SDK has restrictions for iOS archs (armv7, arm64, **not** _armv7s_) it's fixed since v.3.3.3
-
-**Update:** But in my opinion, the best solution right now is using plugin v.3.3.1 (before update AF-iOS-SDK). So if you have any problem with v.3.3.3, try to use v.3.3.1
-
 Plugin was updated by AF to v.4.x with updated AF-Android-SDK & AF-iOS-SDK.
 
+## Supported Platforms
+
+- Android
+- iOS 8+
 
 ## Installation
 
@@ -60,6 +60,8 @@ Add the following line to your config xml:
 - *devKey* - Your application devKey provided by AppsFlyer.
 - *appId*  - **For iOS only.** Your iTunes application id.
 
+**For Cordova:**
+
 ```javascript
 document.addEventListener("deviceready", function(){
     var args = [];
@@ -74,6 +76,26 @@ document.addEventListener("deviceready", function(){
 	window.plugins.appsFlyer.initSdk(args);
 }, false);
 ```
+
+**For Ionic**
+
+```javascript
+  $ionicPlatform.ready(function() {
+
+    var args = [];
+    var devKey = "xxXXXXXxXxXXXXxXXxxxx8";   // your AppsFlyer devKey
+    args.push(devKey);
+
+    if (ionic.Platform.isIOS()) {
+        var appId = "123456789";            // your ios app id in app store
+        args.push(appId);
+    }
+
+      window.plugins.appsFlyer.initSdk(args);
+
+  });
+```
+
 
 #### 2\. Set currency code (optional)
 ```javascript
