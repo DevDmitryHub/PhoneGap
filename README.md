@@ -45,6 +45,7 @@ For more details about manual installation see wiki page [Manual Installation](h
 
 ### PhoneGap Build
 Built against Phonegap >= 4.3.x.
+`Cordova >= 4.3.x.`
 
 Add the following line to your config xml:
 
@@ -54,7 +55,7 @@ Add the following line to your config xml:
 
 ## Usage API
 
-#### 1\. Set your App_ID (iOS only), Dev_Key and enable AppsFlyer to detect installations, sessions (app opens), and updates.  
+#### 1\. Set your App_ID (iOS only), Dev_Key and enable AppsFlyer to detect installations, sessions (app opens), and updates.
 **Note:** *This is the minimum requirement to start tracking your app installs and it's already implemented in this plugin. You **_MUST_** modify this call and provide:*
 
 - *devKey* - Your application devKey provided by AppsFlyer.
@@ -63,7 +64,7 @@ Add the following line to your config xml:
 **For Cordova:**
 
 ```javascript
-document.addEventListener("deviceready", function(){
+document.addEventListener("deviceready", function() {
     var args = [];
     var devKey = "xxXXXXXxXxXXXXxXXxxxx8";   // your AppsFlyer devKey
     args.push(devKey);
@@ -73,6 +74,7 @@ document.addEventListener("deviceready", function(){
         var appId = "123456789";            // your ios app id in app store
         args.push(appId);
     }
+
 	window.plugins.appsFlyer.initSdk(args);
 }, false);
 ```
@@ -80,8 +82,7 @@ document.addEventListener("deviceready", function(){
 **For Ionic**
 
 ```javascript
-  $ionicPlatform.ready(function() {
-
+$ionicPlatform.ready(function() {
     var args = [];
     var devKey = "xxXXXXXxXxXXXXxXXxxxx8";   // your AppsFlyer devKey
     args.push(devKey);
@@ -91,9 +92,8 @@ document.addEventListener("deviceready", function(){
         args.push(appId);
     }
 
-      window.plugins.appsFlyer.initSdk(args);
-
-  });
+    window.plugins.appsFlyer.initSdk(args);
+});
 ```
 
 
