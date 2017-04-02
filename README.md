@@ -17,11 +17,6 @@
 - [Change Log](https://github.com/DevDmitryHub/cordova-plugin-appsflyer/releases)
 - [Sample App](#sample-app)
 
-## Supported Platforms
-
-- Android
-- iOS 8+
-
 ## Installation
 
 Using the reference to GitHub repository:
@@ -46,13 +41,12 @@ Mind the path:
 For more details about manual installation see wiki page [Manual Installation](https://github.com/DevDmitryHub/cordova-plugin-appsflyer/wiki/Manual-installation) or use author's [page](https://github.com/AppsFlyerSDK/PhoneGap#manual-installation).
 
 ### PhoneGap Build
-Built against Phonegap >= 4.3.x.
-`Cordova >= 4.3.x.`
+Built against `Phonegap >= 4.3.x.` `Cordova >= 4.3.x.`
 
 Add the following line to your config xml:
 
 ```xml
-<gap:plugin name="cordova-plugin-appsflyer" version="3.3.1" />
+<gap:plugin name="cordova-plugin-appsflyer" version="4.2.2" />
 ```
 
 ## Usage API
@@ -84,7 +78,7 @@ document.addEventListener("deviceready", function() {
 **For Ionic**
 
 ```javascript
-  $ionicPlatform.ready(function() {
+$ionicPlatform.ready(function() {
 
     var options = {
         devKey:  'xxXXXXXxXxXXXXxXXxxxx8' // your AppsFlyer devKey
@@ -94,8 +88,8 @@ document.addEventListener("deviceready", function() {
         options.appId = "123456789";      // your ios app id in app store
     }
 
-      window.plugins.appsFlyer.initSdk(options);
-  });
+    window.plugins.appsFlyer.initSdk(options);
+});
 ```
 
 
@@ -103,8 +97,6 @@ document.addEventListener("deviceready", function() {
 ```javascript
 //USD is default value. Acceptable ISO(http://www.xe.com/iso4217.php) Currency codes here. Examples:
 window.plugins.appsFlyer.setCurrencyCode("USD");
-//British Pound: window.plugins.appsFlyer.setCurrencyCode("GBP");
-window.plugins.appsFlyer.setCurrencyCode("GBP"); // British Pound
 ```
 #### 3\. Set customer user ID (Advance)
 *Setting your own custom ID will enable you to cross-reference your own unique ID with AppsFlyer’s user ID and the
@@ -136,20 +128,14 @@ window.plugins.appsFlyer.trackEvent(eventName, eventValues);
 ###### Example:
 ```javascript
 var getUserIdCallbackFn = function(id) {
-	alert('received id is: ' + id);
+    alert('received id is: ' + id);
 }
 window.plugins.appsFlyer.getAppsFlyerUID(getUserIdCallbackFn);
 ```
 #### 6\. Accessing AppsFlyer Attribution / Conversion Data from the SDK (Deferred Deep-linking).
 Read more: [Android](http://support.appsflyer.com/entries/69796693-Accessing-AppsFlyer-Attribution-Conversion-Data-from-the-SDK-Deferred-Deep-linking-), [iOS](http://support.appsflyer.com/entries/22904293-Testing-AppsFlyer-iOS-SDK-Integration-Before-Submitting-to-the-App-Store-)
-**Note:** AppsFlyer plugin will fire `onInstallConversionDataLoaded` event with attribution data. You must implement listener to receive the data.
-###### Example:
-```javascript
-document.addEventListener('onInstallConversionDataLoaded', function(e){
-	var attributionData = (JSON.stringify(e.detail));
-	alert(attributionData);
-}, false);
-```
+**Note:** AppsFlyer plugin replaced event `onInstallConversionDataLoaded` by using listener `onInstallConversionDataListener` if you want use it,
+you have to enable option `onInstallConversionDataListener` to `true` on `initSdk` and handle information.
 
 ## Deep Linking Tracking
 
@@ -174,16 +160,15 @@ It appears as follows:
 }
 ```
 
----
 
 ## Sample App
 
 This plugin has a `examples` folder with `demoA` (AngularJS 1.x) project bundled with it. To give it a try , clone this repo and from root a.e. `PhoneGap` execute the following:
 
 ```sh
-npm run setup
+npm run <operation>
 ```
-  -  `npm run demo.run-android` - runs Android
+  -  `demo.run-android` - runs Android
   -  `demo.build-android` - builds Android
   -  `demo.run-ios` - runs iOS
   -  `demo.build-ios` - builds iOS
