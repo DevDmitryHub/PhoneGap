@@ -21,9 +21,9 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-appsflyer"
-        version="4.1.0">
+        version="4.1.1">
     <name>AppsFlyer</name>
-    <description>Cordova plugin for integration with AppsFlyer SDK. It's a fork of the official version from AppsFlyer.</description>
+    <description>Cordova plugin for integration with AppsFlyer SDK. It's a fork with some changes of the official version from AppsFlyer.</description>
     <license>Apache 2.0</license>
     <keywords>cordova,appsflyer</keywords>
     <repo>https://github.com/DevDmitryHub/cordova-plugin-appsflyer.git</repo>

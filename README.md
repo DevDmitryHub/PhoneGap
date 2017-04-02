@@ -13,8 +13,6 @@
 - [Plugin wiki pages](https://github.com/DevDmitryHub/cordova-plugin-appsflyer/wiki)
 - [Change Log](https://github.com/DevDmitryHub/cordova-plugin-appsflyer/releases)
 
-Plugin was updated by AF to v.4.x with updated AF-Android-SDK & AF-iOS-SDK.
-
 ## Supported Platforms
 
 - Android
