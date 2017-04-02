@@ -8,38 +8,33 @@ static NSString *const NO_DEVKEY_FOUND = @"No 'devKey' found or its empty";
 static NSString *const NO_APPID_FOUND  = @"No 'appId' found or its empty";
 static NSString *const SUCCESS         = @"Success";
 
-//  never called, use pluginInitialize instead
-//- (CDVPlugin *)initWithWebView:(UIWebView *)theWebView
-//{
-//    [self pluginInitialize];
-//    return self;
-//}
+ NSString* mConversionListener;
 
-- (void)pluginInitialize
-{
-  [AppsFlyerTracker sharedTracker].delegate = self;
-}
+- (void)pluginInitialize{}
 
 - (void)initSdk:(CDVInvokedUrlCommand*)command
 {
-    NSString* callbackId = command.callbackId;
-    
     NSDictionary* initSdkOptions = [command argumentAtIndex:0 withDefault:[NSNull null]];
     
     NSString* devKey = nil;
     NSString* appId = nil;
     BOOL isDebug = NO;
+    BOOL isConversionData = NO;
 
     if (![initSdkOptions isKindOfClass:[NSNull class]]) {
-        
+
         id value = nil;
+        id isConversionDataValue = nil;
         devKey = (NSString*)[initSdkOptions objectForKey: afDevKey];
         appId = (NSString*)[initSdkOptions objectForKey: afAppId];
         
         value = [initSdkOptions objectForKey: afIsDebug];
         if ([value isKindOfClass:[NSNumber class]]) {
-            // isDebug is a boolean that will come through as an NSNumber
             isDebug = [(NSNumber*)value boolValue];
+        }
+        isConversionDataValue = [initSdkOptions objectForKey: afConversionData];
+        if ([isConversionDataValue isKindOfClass:[NSNumber class]]) {
+            isConversionData = [(NSNumber*)isConversionDataValue boolValue];
         }
     }
     
@@ -52,23 +47,32 @@ static NSString *const SUCCESS         = @"Success";
         error = NO_APPID_FOUND;
     }
     
-    
     if(error != nil){
         CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: error];
-        [self.commandDelegate sendPluginResult:result callbackId:callbackId];
+        [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
         return;
-
     }
     else{
+
         [AppsFlyerTracker sharedTracker].appleAppID = appId;
         [AppsFlyerTracker sharedTracker].appsFlyerDevKey = devKey;
-       // [AppsFlyerTracker sharedTracker].delegate = self;  // moved to 'pluginInitialize'
         [AppsFlyerTracker sharedTracker].isDebug = isDebug;
         [[AppsFlyerTracker sharedTracker] trackAppLaunch];
-        
-        //TODO: connect to static lib success callback
-         CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:SUCCESS];
-        [self.commandDelegate sendPluginResult:result callbackId:callbackId];
+
+
+        if(isConversionData == YES){
+          CDVPluginResult* pluginResult = nil;
+          mConversionListener = command.callbackId;
+
+          [AppsFlyerTracker sharedTracker].delegate = self;
+
+          pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+          [pluginResult setKeepCallback:[NSNumber numberWithBool:YES]];
+        }
+        else{
+            CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:SUCCESS];
+            [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+        }
     }
   }
 
@@ -113,37 +117,6 @@ static NSString *const SUCCESS         = @"Success";
     [[AppsFlyerTracker sharedTracker] trackEvent:eventName withValue:eventValue];
 }
 
--(void)onConversionDataReceived:(NSDictionary*) installData {
-    NSError *error;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:installData
-                                            options:0
-                                            error:&error];
-    if (jsonData) {
-        NSString *JSONString = [[NSString alloc] initWithBytes:[jsonData bytes] length:[jsonData length] encoding:NSUTF8StringEncoding];
-        
-        [self performSelectorOnMainThread:@selector(reportConversionData:) withObject:JSONString waitUntilDone:NO];
-        NSLog(@"JSONString = %@",JSONString);
-
-    } else {
-        NSLog(@"%@",error);
-    }
-}
-
-
-//-(void) reportConversionData_old:(NSString *)data {
-//    [[super webViewEngine] evaluateJavaScript:[NSString stringWithFormat:@"javascript:window.plugins.appsFlyer.onInstallConversionDataLoaded(%@)", data] completionHandler:nil];
-//}
-
--(void) reportConversionData:(NSString *)data {    
-    NSString *js = [NSString stringWithFormat:@"window.plugins.appsFlyer.onInstallConversionDataLoaded(%@)", data];
-    [self.commandDelegate evalJs:js];
-}
-
--(void)onConversionDataRequestFailure:(NSError *) error {
-    
-    NSLog(@"%@",error);
-    
-}
 
 - (void)trackEvent:(CDVInvokedUrlCommand*)command {
 
@@ -163,7 +136,99 @@ static NSString *const SUCCESS         = @"Success";
     }else{
         NSLog(@"Invalid device token");
     }
+}
 
+
+-(void)onConversionDataReceived:(NSDictionary*) installData {
+
+    NSDictionary* message = @{
+                              @"status": afSuccess,
+                              @"type": afOnInstallConversionDataLoaded,
+                              @"data": installData
+                              };
+
+    [self performSelectorOnMainThread:@selector(handleCallback:) withObject:message waitUntilDone:NO];
+}
+
+
+-(void)onConversionDataRequestFailure:(NSError *) _errorMessage {
+
+    NSDictionary* errorMessage = @{
+                                   @"status": afFailure,
+                                   @"type": afOnInstallConversionFailure,
+                                   @"data": _errorMessage
+                                   };
+
+    [self performSelectorOnMainThread:@selector(handleCallback:) withObject:errorMessage waitUntilDone:NO];
+}
+
+
+- (void) onAppOpenAttribution:(NSDictionary*) attributionData {
+
+    NSDictionary* message = @{
+                              @"status": afSuccess,
+                              @"type": afOnAppOpenAttribution,
+                              @"data": attributionData
+                              };
+
+    [self performSelectorOnMainThread:@selector(handleCallback:) withObject:message waitUntilDone:NO];
+}
+
+- (void) onAppOpenAttributionFailure:(NSError *)_errorMessage {
+
+    NSDictionary* errorMessage = @{
+                                   @"status": afFailure,
+                                   @"type": afOnAttributionFailure,
+                                   @"data": _errorMessage
+                                   };
+
+    [self performSelectorOnMainThread:@selector(handleCallback:) withObject:errorMessage waitUntilDone:NO];
+}
+
+
+-(void) handleCallback:(NSDictionary *) message{
+    NSError *error;
+
+    NSData *jsonMessage = [NSJSONSerialization dataWithJSONObject:message
+                                                          options:0
+                                                            error:&error];
+    if (jsonMessage) {
+        NSString *jsonMessageStr = [[NSString alloc] initWithBytes:[jsonMessage bytes] length:[jsonMessage length] encoding:NSUTF8StringEncoding];
+
+        NSString* status = (NSString*)[message objectForKey: @"status"];
+
+        if([status isEqualToString:afSuccess]){
+            [self reportOnSuccess:jsonMessageStr];
+        }
+        else{
+            [self reportOnFailure:jsonMessageStr];
+        }
+
+        NSLog(@"jsonMessageStr = %@",jsonMessageStr);
+    } else {
+        NSLog(@"%@",error);
+    }
+}
+
+-(void) reportOnFailure:(NSString *)errorMessage {
+
+    if(mConversionListener != nil){
+        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:errorMessage];
+        [pluginResult setKeepCallback:[NSNumber numberWithBool:NO]];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:mConversionListener];
+
+        mConversionListener = nil;
+    }}
+
+-(void) reportOnSuccess:(NSString *)data {
+
+    if(mConversionListener != nil){
+        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:data];
+        [pluginResult setKeepCallback:[NSNumber numberWithBool:NO]];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:mConversionListener];
+
+        mConversionListener = nil;
+     }
 }
 
 @end

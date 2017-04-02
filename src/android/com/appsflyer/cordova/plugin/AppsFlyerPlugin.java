@@ -21,10 +21,11 @@ import android.content.Intent;
 import android.util.Log;
 import android.os.Build;
 
+import static com.appsflyer.cordova.plugin.AppsFlyerConstants.*;
+
 public class AppsFlyerPlugin extends CordovaPlugin {
 
-	final static String NO_DEVKEY_FOUND = "No 'devKey' found or its empty";
-	final static String SUCCESS = "Success";
+	private CallbackContext mConversionListener = null;
 
 	@Override
 	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -45,29 +46,25 @@ public class AppsFlyerPlugin extends CordovaPlugin {
         Log.d("AppsFlyer", "Executing...");
 		if("setCurrencyCode".equals(action))
 		{
-			setCurrencyCode(args);
-			return true;
+			return setCurrencyCode(args);
 		}
 		else if("setAppUserId".equals(action))
 		{
-			setAppUserId(args, callbackContext);
-			return true;
+			return setAppUserId(args, callbackContext);
 		}
 		else if("getAppsFlyerUID".equals(action))
 		{
-			getAppsFlyerUID(args, callbackContext);
-			return true;
+			return getAppsFlyerUID(args, callbackContext);
 		}
 		else if("initSdk".equals(action))
 		{
-			initSdk(args,callbackContext);
-			return true;
+			return initSdk(args,callbackContext);
 		}
 		else if ("trackEvent".equals(action)) {
-			trackEvent(args);
+			return trackEvent(args, callbackContext);
 		}
 		else if ("setGCMProjectID".equals(action)) {
-			setGCMProjectID(args);
+			return setGCMProjectID(args);
 		}
 
 		return false;
@@ -85,99 +82,155 @@ public class AppsFlyerPlugin extends CordovaPlugin {
 	 * @param args
 	 * @param callbackContext
      */
-	private void initSdk(JSONArray args, final CallbackContext callbackContext) {
+	private boolean initSdk(final JSONArray args, final CallbackContext callbackContext) {
+
 
 		String devKey = null;
-		boolean isDebug;
+		boolean isConversionData;
+		boolean isDebug = false;
+
 		AppsFlyerLib instance = AppsFlyerLib.getInstance();
 
 
 		try{
 			final JSONObject options = args.getJSONObject(0);
 
-			devKey = options.optString("devKey", "");
+			devKey = options.optString(AF_DEV_KEY, "");
+			isConversionData = options.optBoolean(AF_CONVERSION_DATA, false);
 
 			if(devKey.trim().equals("")){
 				callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, NO_DEVKEY_FOUND));
-				return;
 			}
 
-			isDebug = options.optBoolean("isDebug", false);
+			isDebug = options.optBoolean(AF_IS_DEBUG, false);
 
 			instance.setDebugLog(isDebug);
 
 			if(isDebug == true){ Log.d("AppsFlyer", "Starting Tracking");}
 			trackAppLaunch();
 
-			instance.startTracking(this.cordova.getActivity().getApplication(), devKey);
+			instance.startTracking(AppsFlyerPlugin.this.cordova.getActivity().getApplication(), devKey);
 
 
-			callbackContext.success(SUCCESS);
+			if(isConversionData == true){
+
+				if(mConversionListener == null){
+					mConversionListener = callbackContext;
+				}
+
+				registerConversionListener(instance);
+				sendPluginNoResult(callbackContext);
+			}
+			else{
+				callbackContext.success(SUCCESS);
+			}
+
 		}
 		catch (JSONException e){
 			e.printStackTrace();
-			return;
 		}
 
+		return true;
+	}
+
+	private void registerConversionListener(AppsFlyerLib instance){
 		instance.registerConversionListener(cordova.getActivity().getApplicationContext(), new AppsFlyerConversionListener(){
 
 			@Override
-			public void onAppOpenAttribution(Map<String, String> arg0) {
-				//@TODO callback to cordova
+			public void onAppOpenAttribution(Map<String, String> attributionData) {
+				handleSuccess(AF_ON_APP_OPEN_ATTRIBUTION, attributionData);
 			}
 
 			@Override
 			public void onAttributionFailure(String errorMessage) {
-				//@TODO callback to cordova
+				handleError(AF_ON_ATTRIBUTION_FAILURE, errorMessage);
 			}
 
 			@Override
 			public void onInstallConversionDataLoaded(Map<String, String> conversionData) {
-				final String json = new JSONObject(conversionData).toString();
-				webView.getView().post(new Runnable() {
-					public void run() {
-						String js = "window.plugins.appsFlyer.onInstallConversionDataLoaded('"+json+"')";
-						if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-				      webView.sendJavascript(js);
-				    } else {
-				      webView.loadUrl("javascript:" + js);
-				    }
-					}
-				});
+				handleSuccess(AF_ON_INSTALL_CONVERSION_DATA_LOADED, conversionData);
 			}
 
 			@Override
-			public void onInstallConversionFailure(String arg0) {
-				//@TODO callback to cordova
+			public void onInstallConversionFailure(String errorMessage) {
+				handleError(AF_ON_INSTALL_CONVERSION_FAILURE, errorMessage);
+			}
+
+
+			private void handleError(String eventType, String errorMessage){
+
+				try {
+					JSONObject obj = new JSONObject();
+
+					obj.put("status", AF_FAILURE);
+					obj.put("type", eventType);
+					obj.put("data", errorMessage);
+
+					sendEvent(obj);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+
+			private void handleSuccess(String eventType, Map<String, String> data){
+				try {
+					JSONObject obj = new JSONObject();
+
+					obj.put("status", AF_SUCCESS);
+					obj.put("type", eventType);
+					obj.put("data", new JSONObject(data));
+
+					sendEvent(obj);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+
+			private void sendEvent(JSONObject params) {
+
+				final String jsonStr = params.toString();
+
+
+				if (mConversionListener != null) {
+					PluginResult result = new PluginResult(PluginResult.Status.OK, jsonStr);
+					result.setKeepCallback(false);
+
+					mConversionListener.sendPluginResult(result);
+					mConversionListener = null;
+				}
 			}
 		});
 	}
 
-	private void trackEvent(JSONArray parameters) {
+	private boolean trackEvent(JSONArray parameters, final CallbackContext callbackContext) {
 		String eventName;
-		Map<String, Object> eventValues;
-		try
-		{
+		Map<String, Object> eventValues = null;
+		try{
 			eventName = parameters.getString(0);
-			JSONObject jsonEventValues = parameters.getJSONObject(1);
-			eventValues = jsonTOMap(jsonEventValues.toString());
 
+			if(parameters.length() >1 && !parameters.get(1).equals(null)){
+				JSONObject jsonEventValues = parameters.getJSONObject(1);
+				eventValues = jsonToMap(jsonEventValues.toString());
+			}
 		}
-		catch (JSONException e)
-		{
+		catch (JSONException e){
 			e.printStackTrace();
-			return;
+			return true;
 		}
-		if(eventName == null || eventName.length()==0)
-		{
-			return;
+
+		if(eventName == null || eventName.trim().length()==0){
+			callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, NO_EVENT_NAME_FOUND));
+			return true;
 		}
+
 		Context c = this.cordova.getActivity().getApplicationContext();
 		AppsFlyerLib.getInstance().trackEvent(c, eventName, eventValues);
+
+		return true;
 	}
 
-	private void setCurrencyCode(JSONArray parameters)
-	{
+	private boolean setCurrencyCode(JSONArray parameters){
+
 		String currencyId=null;
 		try
 		{
@@ -186,24 +239,25 @@ public class AppsFlyerPlugin extends CordovaPlugin {
 		catch (JSONException e)
 		{
 			e.printStackTrace();
-			return;
+			return true; //TODO error
 		}
 		if(currencyId == null || currencyId.length()==0)
 		{
-			return;
+			return true; //TODO error
 		}
 		AppsFlyerLib.getInstance().setCurrencyCode(currencyId);
 
+		return true;
 	}
 
-	private void setAppUserId(JSONArray parameters, CallbackContext callbackContext)
-	{
+	private boolean setAppUserId(JSONArray parameters, CallbackContext callbackContext){
+
 		try
 		{
 			String customeUserId = parameters.getString(0);
 			if(customeUserId == null || customeUserId.length()==0)
 			{
-				return;
+				return true; //TODO error
 			}
         	AppsFlyerLib.getInstance().setAppUserId(customeUserId);
         	PluginResult r = new PluginResult(PluginResult.Status.OK);
@@ -213,19 +267,23 @@ public class AppsFlyerPlugin extends CordovaPlugin {
 		catch (JSONException e)
 		{
 			e.printStackTrace();
-			return;
+			return true; //TODO error
 		}
+
+		return true;
 	}
 
-	private void getAppsFlyerUID(JSONArray parameters, CallbackContext callbackContext)
-	{
+	private boolean getAppsFlyerUID(JSONArray parameters, CallbackContext callbackContext){
+
     	String id = AppsFlyerLib.getInstance().getAppsFlyerUID(cordova.getActivity().getApplicationContext());
     	PluginResult r = new PluginResult(PluginResult.Status.OK, id);
     	r.setKeepCallback(false);
     	callbackContext.sendPluginResult(r);
+
+		return true;
 	}
 
-	private static Map<String,Object> jsonTOMap(String inputString){
+	private static Map<String,Object> jsonToMap(String inputString){
 		Map<String,Object> newMap = new HashMap<String, Object>();
 
 		try {
@@ -244,7 +302,7 @@ public class AppsFlyerPlugin extends CordovaPlugin {
 	}
 
 
-	private void setGCMProjectID(JSONArray parameters) {
+	private boolean setGCMProjectID(JSONArray parameters) {
 		String gcmProjectId = null;
 		try {
 			gcmProjectId = parameters.getString(0);
@@ -252,11 +310,18 @@ public class AppsFlyerPlugin extends CordovaPlugin {
 			e.printStackTrace();
 		}
 
-		if(gcmProjectId == null || gcmProjectId.length()==0)
-		{
-			return;
+		if(gcmProjectId == null || gcmProjectId.length()==0){
+			return true;//TODO error
 		}
 		Context c = this.cordova.getActivity().getApplicationContext();
 		AppsFlyerLib.getInstance().setGCMProjectNumber(c, gcmProjectId);
+		return true;
+	}
+
+	private void sendPluginNoResult(CallbackContext callbackContext) {
+		PluginResult pluginResult = new PluginResult(
+				PluginResult.Status.NO_RESULT);
+		pluginResult.setKeepCallback(true);
+		callbackContext.sendPluginResult(pluginResult);
 	}
 }

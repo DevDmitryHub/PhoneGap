@@ -64,16 +64,6 @@
             exec(null, null, "AppsFlyerPlugin", "trackEvent", [eventName, eventValue]);
         };
 
-        AppsFlyer.prototype.onInstallConversionDataLoaded = function (conversionData) {
-            var data = conversionData,
-                    event;
-            if (typeof data === "string") {
-                data = JSON.parse(conversionData);
-            }
-            event = new CustomEvent('onInstallConversionDataLoaded', {'detail': data});
-            global.document.dispatchEvent(event);
-        };
-
         global.cordova.addConstructor(function () {
             if (!global.Cordova) {
                 global.Cordova = global.cordova;

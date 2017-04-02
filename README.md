@@ -2,6 +2,8 @@
 
 [![Version](https://img.shields.io/npm/v/cordova-plugin-appsflyer.svg?style=flat)](#)
 [![Cordova status](https://img.shields.io/badge/cordova-v5.x-blue.svg?style=flat)](#)
+[![AF-Android-SDK](https://img.shields.io/badge/AF%20Android%20SDK-v4.6.1-blue.svg?style=flat)](#)
+[![AF-iOS-SDK](https://img.shields.io/badge/AF%20iOS%20SDK-v4.5.12-blue.svg?style=flat)](#)
 [![NPM downloads](https://img.shields.io/npm/dt/cordova-plugin-appsflyer.svg?style=flat)](#)
 [![Github Issues](http://githubbadges.herokuapp.com/devdmitryhub/cordova-plugin-appsflyer/issues.svg)](https://github.com/devdmitryhub/cordova-plugin-appsflyer/issues)
 
@@ -87,7 +89,7 @@ document.addEventListener("deviceready", function() {
     var options = {
         devKey:  'xxXXXXXxXxXXXXxXXxxxx8' // your AppsFlyer devKey
     };
-                              
+
     if (ionic.Platform.isIOS()) {
         options.appId = "123456789";      // your ios app id in app store
     }
@@ -176,7 +178,7 @@ It appears as follows:
 
 ## Sample App
 
-This plugin has a `examples` folder with `demoAngular` project bundled with it. To give it a try , clone this repo and from root a.e. `PhoneGap` execute the following:
+This plugin has a `examples` folder with `demoA` (AngularJS 1.x) project bundled with it. To give it a try , clone this repo and from root a.e. `PhoneGap` execute the following:
 
 ```sh
 npm run setup

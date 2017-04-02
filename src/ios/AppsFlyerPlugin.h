@@ -18,6 +18,16 @@
 
 
 // Appsflyer JS objects
-#define afDevKey @"devKey"
-#define afAppId @"appId"
-#define afIsDebug @"isDebug"
+#define afDevKey                        @"devKey"
+#define afAppId                         @"appId"
+#define afIsDebug                       @"isDebug"
+
+// Appsflyer native objects
+#define afConversionData                @"onInstallConversionDataListener"
+#define afOnInstallConversionData       @"onInstallConversionData"
+#define afSuccess                       @"success"
+#define afFailure                       @"failure"
+#define afOnAttributionFailure          @"onAttributionFailure"
+#define afOnAppOpenAttribution          @"onAppOpenAttribution"
+#define afOnInstallConversionFailure    @"onInstallConversionFailure"
+#define afOnInstallConversionDataLoaded @"onInstallConversionDataLoaded"

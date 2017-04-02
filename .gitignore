@@ -11,8 +11,9 @@ Thumbs.db
 *.class
 *.iml
 
-node_modules
+node_modules/
 .idea/**
 
-examples/demoAngular/.idea/**
-examples/demoAngular/node_modules/
+examples/demoA/.idea/**
+examples/demoA/node_modules/
+examples/demoA/www/lib/
