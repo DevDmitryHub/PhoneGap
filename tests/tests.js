@@ -1,4 +1,5 @@
 /* jshint jasmine: true */
+/* global cordova */
 
 exports.defineAutoTests = function () {
 

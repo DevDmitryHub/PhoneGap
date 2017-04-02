@@ -10,8 +10,10 @@
 	- [Manual Installation](#manual-installation)
 	- [Phone Gap Build](#phonegap-build)
 - [Usage API](#usage-api)
+- [Deep Links Tracking](#deep-linking-tracking)
 - [Plugin wiki pages](https://github.com/DevDmitryHub/cordova-plugin-appsflyer/wiki)
 - [Change Log](https://github.com/DevDmitryHub/cordova-plugin-appsflyer/releases)
+- [Sample App](#sample-app)
 
 ## Supported Platforms
 
@@ -147,7 +149,7 @@ document.addEventListener('onInstallConversionDataLoaded', function(e){
 }, false);
 ```
 
-## Deeplinking Tracking
+## Deep Linking Tracking
 
 #### Android
 In ver. 4.2.5 deeplinking metadata (scheme/host) is sent automatically
@@ -170,5 +172,16 @@ It appears as follows:
 }
 ```
 
-## Sample app:
-AF have posted [af-cordova-ionic-demo](https://github.com/af-fess/af-cordova-ionic-demo) as s separate repo in github, you can download and run it.
+---
+
+## Sample App
+
+This plugin has a `examples` folder with `demoAngular` project bundled with it. To give it a try , clone this repo and from root a.e. `PhoneGap` execute the following:
+
+```sh
+npm run setup
+```
+  -  `npm run demo.run-android` - runs Android
+  -  `demo.build-android` - builds Android
+  -  `demo.run-ios` - runs iOS
+  -  `demo.build-ios` - builds iOS

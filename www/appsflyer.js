@@ -8,7 +8,7 @@
             var e = document.createEvent("CustomEvent");
             e.initCustomEvent(type, true, true, config.detail);
             return e;
-        }
+        };
     }
 
     (function (global) {
