@@ -97,24 +97,25 @@ document.addEventListener("deviceready", function() {
 
 #### 2\. Set currency code (optional)
 ```javascript
-//USD is default value. Acceptable ISO(http://www.xe.com/iso4217.php) Currency codes here. Examples:  
-//British Pound: window.plugins.appsFlyer.setCurrencyCode("GBP");  
+//USD is default value. Acceptable ISO(http://www.xe.com/iso4217.php) Currency codes here. Examples:
 window.plugins.appsFlyer.setCurrencyCode("USD");
+//British Pound: window.plugins.appsFlyer.setCurrencyCode("GBP");
+window.plugins.appsFlyer.setCurrencyCode("GBP"); // British Pound
 ```
 #### 3\. Set customer user ID (Advance)
-*Setting your own custom ID will enable you to cross-reference your own unique ID with AppsFlyer’s user ID and the 
-other devices’ IDs. This ID will be available at AppsFlyer CSV reports along with postbacks APIs for cross-referencing 
-with you internal IDs.*  
+*Setting your own custom ID will enable you to cross-reference your own unique ID with AppsFlyer’s user ID and the
+other devices’ IDs. This ID will be available at AppsFlyer CSV reports along with postbacks APIs for cross-referencing
+with you internal IDs.*
 **Note:** *The ID must be set during the first launch of the app at the SDK initialization. The best practice is to call to this API during `deviceready` event if possible.*
 ```javascript
 window.plugins.appsFlyer.setAppUserId(userId);
 ```
 #### 4\. In App Events Tracking API (optional)
 *These events help you track how loyal users discover your app and attribute them to specific campaign/source.*
-- *These in-app events help you track how loyal users discover your app, and attribute them to specific 
-campaigns/media-sources. Please take the time define the event/s you would like to measure to allow you 
+- *These in-app events help you track how loyal users discover your app, and attribute them to specific
+campaigns/media-sources. Please take the time define the event/s you would like to measure to allow you
 to track ROI (Return on Investment) and LTV (Lifetime Value).*
-- *The “trackEvent” method allows you to send in-app events to AppsFlyer analytics. This method allows you to 
+- *The “trackEvent” method allows you to send in-app events to AppsFlyer analytics. This method allows you to
 add events dynamically by adding them directly to the application code.*
 - Rich In App Events Tracking API (optional).
 AppsFlyer’s rich in­app events provide advertisers with the ability to track any post­install event and attribute it to a media source and campaign.
@@ -146,5 +147,28 @@ document.addEventListener('onInstallConversionDataLoaded', function(e){
 }, false);
 ```
 
+## Deeplinking Tracking
+
+#### Android
+In ver. 4.2.5 deeplinking metadata (scheme/host) is sent automatically
+
+#### iOS
+
+Open in Xcode `AppDelegate.m`, add `#import "AppsFlyerTracker.h"` and add the following method under `application: openURL` :
+
+```objective-c
+[[AppsFlyerTracker sharedTracker] handleOpenURL:url sourceApplication:sourceApplication withAnnotation:annotation];
+```
+
+It appears as follows:
+
+```objective-c
+-(BOOL) application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+
+    [[AppsFlyerTracker sharedTracker] handleOpenURL:url sourceApplication:sourceApplication withAnnotation:annotation];
+    return YES;
+}
+```
+
 ## Sample app:
-We posted [af-cordova-ionic-demo](https://github.com/af-fess/af-cordova-ionic-demo) as separate repo in github, you can download and run it.
+AF have posted [af-cordova-ionic-demo](https://github.com/af-fess/af-cordova-ionic-demo) as s separate repo in github, you can download and run it.

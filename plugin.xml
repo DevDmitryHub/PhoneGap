@@ -21,7 +21,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-appsflyer"
-        version="4.1.1">
+        version="4.2.0">
     <name>AppsFlyer</name>
     <description>Cordova plugin for integration with AppsFlyer SDK. It's a fork with some changes of the official version from AppsFlyer.</description>
     <license>Apache 2.0</license>
@@ -47,7 +47,6 @@
         <config-file target="AndroidManifest.xml" parent="/manifest">
             <uses-permission android:name="android.permission.INTERNET"/>
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-            <uses-permission android:name="android.permission.READ_PHONE_STATE" />
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <receiver android:name="com.appsflyer.MultipleInstallBroadcastReceiver" android:exported="true">

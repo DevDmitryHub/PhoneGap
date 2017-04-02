@@ -3,12 +3,11 @@ package com.appsflyer.cordova.plugin;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.cordova.CallbackContext;
+import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.PluginResult;
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -18,6 +17,7 @@ import com.appsflyer.AppsFlyerConversionListener;
 import com.appsflyer.AppsFlyerLib;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.os.Build;
 
@@ -25,6 +25,20 @@ public class AppsFlyerPlugin extends CordovaPlugin {
 
 	final static String NO_DEVKEY_FOUND = "No 'devKey' found or its empty";
 	final static String SUCCESS = "Success";
+
+	@Override
+	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+		super.initialize(cordova, webView);
+	}
+
+	/**
+	 * Called when the activity receives a new intent.
+	 */
+	@Override
+	public void onNewIntent(Intent intent) {
+		cordova.getActivity().setIntent(intent);
+		AppsFlyerLib.getInstance().sendDeepLinkData(cordova.getActivity());
+	}
 
 	@Override
 	public boolean execute(final String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -58,6 +72,9 @@ public class AppsFlyerPlugin extends CordovaPlugin {
 
 		return false;
 	}
+
+
+
     private void trackAppLaunch(){
         Context c = this.cordova.getActivity().getApplicationContext();
         AppsFlyerLib.getInstance().trackEvent(c, null, null);
@@ -146,7 +163,7 @@ public class AppsFlyerPlugin extends CordovaPlugin {
 			eventValues = jsonTOMap(jsonEventValues.toString());
 
 		}
-		catch (JSONException e) 
+		catch (JSONException e)
 		{
 			e.printStackTrace();
 			return;
