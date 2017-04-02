@@ -1,8 +1,7 @@
 
     var exec = require('cordova/exec'),
-        argscheck = require('cordova/argscheck');
-    
-
+        argscheck = require('cordova/argscheck'),
+        appsFlyerError = require('./AppsFlyerError');
 
     if (!window.CustomEvent) {
         window.CustomEvent = function (type, config) {
@@ -17,7 +16,20 @@
 
         AppsFlyer.prototype.initSdk = function (args, successCB, errorCB) {
             argscheck.checkArgs('O', 'AppsFlyer.initSdk', arguments);
-            exec(successCB, errorCB, "AppsFlyerPlugin", "initSdk", [args]);
+
+            if (!args) {
+                if (errorCB) {
+                    errorCB(appsFlyerError.INVALID_ARGUMENT_ERROR);
+                }
+            } else {
+                if(args.appId !== undefined && typeof args.appId != 'string'){
+                    if (errorCB) {
+                        errorCB(appsFlyerError.APPID_NOT_VALID);
+                    }
+                }
+
+                exec(successCB, errorCB, "AppsFlyerPlugin", "initSdk", [args]);
+            }
         };
 
         AppsFlyer.prototype.setCurrencyCode = function (currencyId) {

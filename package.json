@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/DevDmitryHub/cordova-plugin-appsflyer"
+    "url": "git+https://github.com/DevDmitryHub/cordova-plugin-appsflyer"
   },
   "keywords": [
     "cordova",
@@ -19,6 +19,12 @@
     "ecosystem:cordova",
     "cordova-android",
     "cordova-ios"
+  ],
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=4.3.0"
+    }
   ],
   "author": "DevDmitryHub",
   "license": "Apache 2.0",

@@ -8,45 +8,51 @@ static NSString *const NO_DEVKEY_FOUND = @"No 'devKey' found or its empty";
 static NSString *const NO_APPID_FOUND  = @"No 'appId' found or its empty";
 static NSString *const SUCCESS         = @"Success";
 
-- (CDVPlugin *)initWithWebView:(UIWebView *)theWebView
+//  never called, use pluginInitialize instead
+//- (CDVPlugin *)initWithWebView:(UIWebView *)theWebView
+//{
+//    [self pluginInitialize];
+//    return self;
+//}
+
+- (void)pluginInitialize
 {
-    [self pluginInitialize];
-    return self;
+  [AppsFlyerTracker sharedTracker].delegate = self;
 }
 
 - (void)initSdk:(CDVInvokedUrlCommand*)command
 {
     NSString* callbackId = command.callbackId;
-    
+
     NSDictionary* initSdkOptions = [command argumentAtIndex:0 withDefault:[NSNull null]];
-    
+
     NSString* devKey = nil;
     NSString* appId = nil;
     BOOL isDebug = YES;
-    
+
     if (![initSdkOptions isKindOfClass:[NSNull class]]) {
-        
+
         id value = nil;
         devKey = (NSString*)[initSdkOptions objectForKey: afDevKey];
         appId = (NSString*)[initSdkOptions objectForKey: afAppId];
-        
+
         value = [initSdkOptions objectForKey: afIsDebug];
         if ([value isKindOfClass:[NSNumber class]]) {
             // isDebug is a boolean that will come through as an NSNumber
             isDebug = [(NSNumber*)value boolValue];
         }
     }
-    
+
     NSString* error = nil;
-    
+
     if (!devKey || [devKey isEqualToString:@""]) {
         error = NO_DEVKEY_FOUND;
     }
     else if (!appId || [appId isEqualToString:@""]) {
         error = NO_APPID_FOUND;
     }
-    
-    
+
+
     if(error != nil){
         CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: error];
         [self.commandDelegate sendPluginResult:result callbackId:callbackId];
@@ -56,10 +62,10 @@ static NSString *const SUCCESS         = @"Success";
     else{
         [AppsFlyerTracker sharedTracker].appleAppID = appId;
         [AppsFlyerTracker sharedTracker].appsFlyerDevKey = devKey;
-        [AppsFlyerTracker sharedTracker].delegate = self;
+       // [AppsFlyerTracker sharedTracker].delegate = self;  // moved to 'pluginInitialize'
         [AppsFlyerTracker sharedTracker].isDebug = isDebug;
         [[AppsFlyerTracker sharedTracker] trackAppLaunch];
-        
+
         //TODO: connect to static lib success callback
          CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:SUCCESS];
         [self.commandDelegate sendPluginResult:result callbackId:callbackId];
@@ -123,10 +129,14 @@ static NSString *const SUCCESS         = @"Success";
     }
 }
 
--(void) reportConversionData:(NSString *)data {
-    
-    [[super webViewEngine] evaluateJavaScript:[NSString stringWithFormat:@"javascript:window.plugins.appsFlyer.onInstallConversionDataLoaded(%@)", data] completionHandler:nil];
 
+//-(void) reportConversionData_old:(NSString *)data {
+//    [[super webViewEngine] evaluateJavaScript:[NSString stringWithFormat:@"javascript:window.plugins.appsFlyer.onInstallConversionDataLoaded(%@)", data] completionHandler:nil];
+//}
+
+-(void) reportConversionData:(NSString *)data {
+    NSString *js = [NSString stringWithFormat:@"window.plugins.appsFlyer.onInstallConversionDataLoaded(%@)", data];
+    [self.commandDelegate evalJs:js];
 }
 
 -(void)onConversionDataRequestFailure:(NSError *) error {

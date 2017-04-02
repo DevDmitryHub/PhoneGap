@@ -63,35 +63,35 @@ Add the following line to your config xml:
 
 ```javascript
 document.addEventListener("deviceready", function() {
-    var args = [];
-    var devKey = "xxXXXXXxXxXXXXxXXxxxx8";   // your AppsFlyer devKey
-    args.push(devKey);
+    var options = {
+        devKey: "xxXXXXXxXxXXXXxXXxxxx8" // your AppsFlyer devKey
+    };
+
     var userAgent = window.navigator.userAgent.toLowerCase();
                           
     if (/iphone|ipad|ipod/.test( userAgent )) {
-        var appId = "123456789";            // your ios app id in app store
-        args.push(appId);
+        options.appId = "123456789";     // your ios app id in app store
     }
 
-	window.plugins.appsFlyer.initSdk(args);
+    window.plugins.appsFlyer.initSdk(options);
 }, false);
 ```
 
 **For Ionic**
 
 ```javascript
-$ionicPlatform.ready(function() {
-    var args = [];
-    var devKey = "xxXXXXXxXxXXXXxXXxxxx8";   // your AppsFlyer devKey
-    args.push(devKey);
+  $ionicPlatform.ready(function() {
 
+    var options = {
+        devKey:  'xxXXXXXxXxXXXXxXXxxxx8' // your AppsFlyer devKey
+    };
+                              
     if (ionic.Platform.isIOS()) {
-        var appId = "123456789";            // your ios app id in app store
-        args.push(appId);
+        options.appId = "123456789";      // your ios app id in app store
     }
 
-    window.plugins.appsFlyer.initSdk(args);
-});
+      window.plugins.appsFlyer.initSdk(options);
+  });
 ```
 
 
@@ -145,3 +145,6 @@ document.addEventListener('onInstallConversionDataLoaded', function(e){
 	alert(attributionData);
 }, false);
 ```
+
+## Sample app:
+We posted [af-cordova-ionic-demo](https://github.com/af-fess/af-cordova-ionic-demo) as separate repo in github, you can download and run it.
