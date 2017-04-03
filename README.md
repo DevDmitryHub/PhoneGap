@@ -6,6 +6,7 @@
 [![AF-iOS-SDK](https://img.shields.io/badge/AF%20iOS%20SDK-v4.6.3-green.svg?style=flat)](#)
 [![NPM downloads](https://img.shields.io/npm/dt/cordova-plugin-appsflyer.svg?style=flat)](#)
 [![Github Issues](http://githubbadges.herokuapp.com/devdmitryhub/cordova-plugin-appsflyer/issues.svg)](https://github.com/devdmitryhub/cordova-plugin-appsflyer/issues)
+[![Build Status](https://api.travis-ci.org/DevDmitryHub/cordova-plugin-appsflyer.svg?branch=master)](https://travis-ci.org/DevDmitryHub/cordova-plugin-appsflyer)
 
 ## Documentation
 - [Installation](#installation)
