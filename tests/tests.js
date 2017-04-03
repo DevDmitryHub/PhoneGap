@@ -8,10 +8,10 @@ exports.defineAutoTests = function () {
 
 
     var AppsFlyerError = {
-        INVALID_ARGUMENT_ERROR: "INVALID_ARGUMENT_ERROR",
-        NO_DEVKEY_FOUND: "No 'devKey' found or its empty",
+        INVALID_ARGUMENTS_ERROR: "Invalid arguments",
+        NO_DEVKEY_FOUND: "AppsFlyer 'devKey' is missing or empty",
+        NO_APPID_FOUND: "Apple 'appId' is missing or empty",
         APPID_NOT_VALID: "'appId' is not valid",
-        NO_APPID_FOUND: "No 'appId' found or its empty",
         SUCCESS: "Success"
     };
 
@@ -60,11 +60,6 @@ exports.defineAutoTests = function () {
         it("appsFlyer.trackEvent method", function () {
             expect(window.plugins.appsFlyer.trackEvent).toBeDefined();
             expect(typeof window.plugins.appsFlyer.trackEvent).toBe('function');
-        });
-
-        it("appsFlyer.onInstallConversionDataLoaded method", function () {
-            expect(window.plugins.appsFlyer.onInstallConversionDataLoaded).toBeDefined();
-            expect(typeof window.plugins.appsFlyer.onInstallConversionDataLoaded).toBe('function');
         });
 
     });

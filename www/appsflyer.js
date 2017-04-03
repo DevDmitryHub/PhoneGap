@@ -19,7 +19,7 @@
 
             if (!args) {
                 if (errorCB) {
-                    errorCB(appsFlyerError.INVALID_ARGUMENT_ERROR);
+                    errorCB(appsFlyerError.INVALID_ARGUMENTS_ERROR);
                 }
             } else {
                 if(args.appId !== undefined && typeof args.appId != 'string'){
@@ -62,6 +62,11 @@
         AppsFlyer.prototype.trackEvent = function (eventName, eventValue) {
             argscheck.checkArgs('SO', 'AppsFlyer.trackEvent', arguments);
             exec(null, null, "AppsFlyerPlugin", "trackEvent", [eventName, eventValue]);
+        };
+
+        AppsFlyer.prototype.handleOpenUrl = function (url) {
+            argscheck.checkArgs('*', 'AppsFlyer.handleOpenUrl', arguments);
+            exec(null, null, "AppsFlyerPlugin", "handleOpenUrl", [url]);
         };
 
         global.cordova.addConstructor(function () {

@@ -84,36 +84,29 @@ public class AppsFlyerPlugin extends CordovaPlugin {
      */
 	private boolean initSdk(final JSONArray args, final CallbackContext callbackContext) {
 
-
-		String devKey = null;
-		boolean isConversionData;
-		boolean isDebug = false;
-
 		AppsFlyerLib instance = AppsFlyerLib.getInstance();
 
-
-		try{
+		try {
 			final JSONObject options = args.getJSONObject(0);
 
-			devKey = options.optString(AF_DEV_KEY, "");
-			isConversionData = options.optBoolean(AF_CONVERSION_DATA, false);
+			String devKey = options.optString(AF_DEV_KEY, "");
+			boolean isConversionData = options.optBoolean(AF_CONVERSION_DATA, false);
 
-			if(devKey.trim().equals("")){
+			if (devKey.trim().equals("")){
 				callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, NO_DEVKEY_FOUND));
 			}
 
-			isDebug = options.optBoolean(AF_IS_DEBUG, false);
+			boolean isDebug = options.optBoolean(AF_IS_DEBUG, false);
 
 			instance.setDebugLog(isDebug);
 
-			if(isDebug == true){ Log.d("AppsFlyer", "Starting Tracking");}
+			if (isDebug) { Log.d("AppsFlyer", "Starting Tracking"); }
 			trackAppLaunch();
 
 			instance.startTracking(AppsFlyerPlugin.this.cordova.getActivity().getApplication(), devKey);
 
 
-			if(isConversionData == true){
-
+			if (isConversionData) {
 				if(mConversionListener == null){
 					mConversionListener = callbackContext;
 				}

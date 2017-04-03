@@ -98,6 +98,7 @@ $ionicPlatform.ready(initListener);
 //USD is default value. Acceptable ISO(http://www.xe.com/iso4217.php) Currency codes here. Examples:
 window.plugins.appsFlyer.setCurrencyCode("USD");
 ```
+
 #### 3\. Set customer user ID (Advance)
 *Setting your own custom ID will enable you to cross-reference your own unique ID with AppsFlyer’s user ID and the
 other devices’ IDs. This ID will be available at AppsFlyer CSV reports along with postbacks APIs for cross-referencing
@@ -153,20 +154,11 @@ Usage: `registerUninstall(token): void`.
 Since v.4.2.0 deeplinking metadata (scheme/host) is sent automatically
 
 #### iOS
-
-Open in Xcode `AppDelegate.m`, add `#import "AppsFlyerTracker.h"` and add the following method under `application: openURL` :
-
-```objective-c
-[[AppsFlyerTracker sharedTracker] handleOpenURL:url sourceApplication:sourceApplication withAnnotation:annotation];
-```
-
-It appears as follows:
-
-```objective-c
--(BOOL) application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-
-    [[AppsFlyerTracker sharedTracker] handleOpenURL:url sourceApplication:sourceApplication withAnnotation:annotation];
-    return YES;
+Add the following function `handleOpenUrl` to your root, and call our SDK as shown:
+###### Example:
+```javascript
+var handleOpenURL = function(url) {
+    window.plugins.appsFlyer.handleOpenUrl(url);
 }
 ```
 

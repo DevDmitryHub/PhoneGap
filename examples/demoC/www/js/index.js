@@ -16,16 +16,20 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+var handleOpenURL = function(url) {
+    window.plugins.appsFlyer.handleOpenUrl(url);
+};
+
 var app = {
     // Application Constructor
-    initialize: function() {
+    initialize: function () {
         this.bindEvents();
     },
     // Bind Event Listeners
     //
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
-    bindEvents: function() {
+    bindEvents: function () {
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
     // deviceready Event Handler
@@ -47,43 +51,42 @@ var app = {
 //        console.log('Received Event: ' + id);
 //    }
 };
-document.addEventListener("deviceready", function(){
+document.addEventListener("deviceready", function () {
 
-   var options = {
-             devKey:  'xxxxXxxxXxxxxXXx8',
-             isDebug: true,
-            onInstallConversionDataListener: true
-           };
+    var options = {
+        devKey: 'xxxxXxxxXxxxxXXx8',
+        isDebug: true,
+        onInstallConversionDataListener: true
+    };
 
     var userAgent = window.navigator.userAgent.toLowerCase();
 
-    if (/iphone|ipad|ipod/.test( userAgent )) {
+    if (/iphone|ipad|ipod/.test(userAgent)) {
         options.appId = "123456789";            // your ios app id in app store        
     }
     window.plugins.appsFlyer.initSdk(options);
     window.plugins.appsFlyer.setGCMProjectID("YOUR_GCM_PROJECT_ID");
 
     var push = PushNotification.init({
-    android: {
-        senderID: "12345"
-    },
-    browser: {
-        pushServiceURL: 'http://push.api.phonegap.com/v1/push'
-    },
-    ios: {
-        alert: "true",
-        badge: "true",
-        sound: "true"
-    },
-    windows: {}
+        android: {
+            senderID: "12345"
+        },
+        browser: {
+            pushServiceURL: 'http://push.api.phonegap.com/v1/push'
+        },
+        ios: {
+            alert: "true",
+            badge: "true",
+            sound: "true"
+        },
+        windows: {}
     });
+
     //Device Token for iOS
-    push.on('registration', function(data) {
-        console.log("device token: "+data.registrationId);
+    push.on('registration', function (data) {
+        console.log("device token: " + data.registrationId);
         window.plugins.appsFlyer.registerUninstall(data.registrationId);
     });
-
-
-
 }, false);
+
 app.initialize();
