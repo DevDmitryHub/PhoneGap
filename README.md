@@ -2,8 +2,8 @@
 
 [![Version](https://img.shields.io/npm/v/cordova-plugin-appsflyer.svg?style=flat)](#)
 [![Cordova status](https://img.shields.io/badge/cordova-v5.x-blue.svg?style=flat)](#)
-[![AF-Android-SDK](https://img.shields.io/badge/AF%20Android%20SDK-v4.6.1-blue.svg?style=flat)](#)
-[![AF-iOS-SDK](https://img.shields.io/badge/AF%20iOS%20SDK-v4.5.12-blue.svg?style=flat)](#)
+[![AF-Android-SDK](https://img.shields.io/badge/AF%20Android%20SDK-v4.6.5-green.svg?style=flat)](#)
+[![AF-iOS-SDK](https://img.shields.io/badge/AF%20iOS%20SDK-v4.6.3-green.svg?style=flat)](#)
 [![NPM downloads](https://img.shields.io/npm/dt/cordova-plugin-appsflyer.svg?style=flat)](#)
 [![Github Issues](http://githubbadges.herokuapp.com/devdmitryhub/cordova-plugin-appsflyer/issues.svg)](https://github.com/devdmitryhub/cordova-plugin-appsflyer/issues)
 
@@ -12,6 +12,7 @@
 	- [Manual Installation](#manual-installation)
 	- [Phone Gap Build](#phonegap-build)
 - [Usage API](#usage-api)
+- [Uninstalls Tracking](#uninstall-tracking)
 - [Deep Links Tracking](#deep-linking-tracking)
 - [Plugin wiki pages](https://github.com/DevDmitryHub/cordova-plugin-appsflyer/wiki)
 - [Change Log](https://github.com/DevDmitryHub/cordova-plugin-appsflyer/releases)
@@ -27,6 +28,9 @@ Using plugin name (Cordova v.5+):
 
 	cordova plugin add cordova-plugin-appsflyer
 
+For Ionic Framework:
+
+    ionic plugin add cordova-plugin-appsflyer
 
 For old Cordova versions you should add reference to the plugin script file.
 Then reference `appsflyer.js` in `index.html`, after `cordova.js`/`phonegap.js`.
@@ -46,7 +50,7 @@ Built against `Phonegap >= 4.3.x.` `Cordova >= 4.3.x.`
 Add the following line to your config xml:
 
 ```xml
-<gap:plugin name="cordova-plugin-appsflyer" version="4.2.2" />
+<gap:plugin name="cordova-plugin-appsflyer" version="4.2.3" />
 ```
 
 ## Usage API
@@ -57,41 +61,36 @@ Add the following line to your config xml:
 - *devKey* - Your application devKey provided by AppsFlyer.
 - *appId*  - **For iOS only.** Your iTunes application id.
 
-**For Cordova:**
-
 ```javascript
-document.addEventListener("deviceready", function() {
+function isIOS() {
+    //for Cordova
+    var userAgent = window.navigator.userAgent.toLowerCase();
+    var result = /iphone|ipad|ipod/.test( userAgent );
+
+    //for Ionic
+    var result = ionic.Platform.isIOS();
+
+    return result;
+}
+
+function initListener() {
     var options = {
-        devKey: "xxXXXXXxXxXXXXxXXxxxx8" // your AppsFlyer devKey
+        devKey: "xxXXXXXxXxXXXXxXXxxxx8", // your AppsFlyer devKey
+        isDebug: true                     // optional
     };
 
-    var userAgent = window.navigator.userAgent.toLowerCase();
-                          
-    if (/iphone|ipad|ipod/.test( userAgent )) {
+    if (isIOS()) {
         options.appId = "123456789";     // your ios app id in app store
     }
 
     window.plugins.appsFlyer.initSdk(options);
-}, false);
+}
+
+//for Cordova
+document.addEventListener("deviceready", initListener, false);
+//for Ionic
+$ionicPlatform.ready(initListener);
 ```
-
-**For Ionic**
-
-```javascript
-$ionicPlatform.ready(function() {
-
-    var options = {
-        devKey:  'xxXXXXXxXxXXXXxXXxxxx8' // your AppsFlyer devKey
-    };
-
-    if (ionic.Platform.isIOS()) {
-        options.appId = "123456789";      // your ios app id in app store
-    }
-
-    window.plugins.appsFlyer.initSdk(options);
-});
-```
-
 
 #### 2\. Set currency code (optional)
 ```javascript
@@ -137,10 +136,20 @@ Read more: [Android](http://support.appsflyer.com/entries/69796693-Accessing-App
 **Note:** AppsFlyer plugin replaced event `onInstallConversionDataLoaded` by using listener `onInstallConversionDataListener` if you want use it,
 you have to enable option `onInstallConversionDataListener` to `true` on `initSdk` and handle information.
 
+## Uninstall Tracking
+
+**Android** - AppsFlyer requires a Google Project Number to enable uninstall tracking for Android apps.
+<a href="https://support.appsflyer.com/hc/en-us/articles/208004986-Android-Uninstall-Tracking">More Information</a>.
+Usage: `setGCMProjectID(GCMProjectNumber): void`.
+
+**iOS** - AppsFlyer requires a Token to enable uninstall tracking for iOS apps.
+ <a href="https://support.appsflyer.com/hc/en-us/articles/211211963-iOS-Uninstall-Tracking">More Information</a>.
+Usage: `registerUninstall(token): void`.
+
 ## Deep Linking Tracking
 
 #### Android
-In ver. 4.2.5 deeplinking metadata (scheme/host) is sent automatically
+Since v.4.2.0 deeplinking metadata (scheme/host) is sent automatically
 
 #### iOS
 
@@ -160,15 +169,18 @@ It appears as follows:
 }
 ```
 
-
 ## Sample App
 
-This plugin has a `examples` folder with `demoA` (AngularJS 1.x) project bundled with it. To give it a try , clone this repo and from root a.e. `PhoneGap` execute the following:
+This plugin has a `examples` folder with `demoA` (AngularJS 1.x) and `demoC` (Cordova) projects bundled with it. To give it a try , from root plugin folder execute following:
 
 ```sh
-npm run <operation>
+npm run <example>.<operation>
 ```
-  -  `demo.run-android` - runs Android
-  -  `demo.build-android` - builds Android
-  -  `demo.run-ios` - runs iOS
-  -  `demo.build-ios` - builds iOS
+**<example>**
+  - `demo_a` - for Android application
+  - `demo_c` - for Cordova application
+**<operation>**
+  - `run-android` - runs Android
+  - `build-android` - builds Android
+  - `run-ios` - runs iOS
+  - `build-ios` - builds iOS

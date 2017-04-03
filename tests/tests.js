@@ -72,6 +72,7 @@ exports.defineAutoTests = function () {
     describe("AppsFlyer -> initSdk", function () {
 
         /* ##################   SUCCESS testing   ################################ */
+        var DEV_KEY = 'd3Ac9qPnrpXYZxfWmCdpwL';
 
         it("appsflyer.spec.2 success callback devKey is defined", function (done) {
 
@@ -95,7 +96,7 @@ exports.defineAutoTests = function () {
             }
 
             var options = {
-                devKey: 'd3Ac9qPnrpXYZxfWmCdpwL'
+                devKey: DEV_KEY
             };
             window.plugins.appsFlyer.initSdk(options, successCB, errorCB);
         });
@@ -116,7 +117,7 @@ exports.defineAutoTests = function () {
             }
 
             var options = {
-                devKey: 'd3Ac9qPnrpXYZxfWmCdpwL',
+                devKey: DEV_KEY,
                 appId: '123456789',
                 isDebug: false
             };
@@ -138,7 +139,7 @@ exports.defineAutoTests = function () {
             }
 
             var options = {
-                devKey: 'd3Ac9qPnrpXYZxfWmCdpwL',
+                devKey: DEV_KEY,
                 appId: '123456789'
             };
             window.plugins.appsFlyer.initSdk(options, successCB, errorCB);
@@ -182,7 +183,7 @@ exports.defineAutoTests = function () {
             }
 
             var options = {
-                devKey: 'd3Ac9qPnrpXYZxfWmCdpwL'
+                devKey: DEV_KEY
             };
             window.plugins.appsFlyer.initSdk(options, successCB, errorCB);
         });
@@ -206,7 +207,7 @@ exports.defineAutoTests = function () {
             }
 
             var options = {
-                devKey: 'd3Ac9qPnrpXYZxfWmCdpwL',
+                devKey: DEV_KEY,
                 appId: 123456789
             };
             window.plugins.appsFlyer.initSdk(options, successCB, errorCB);
