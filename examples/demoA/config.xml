@@ -78,5 +78,5 @@
         <splash density="port-xxhdpi" src="resources/android/splash/drawable-port-xxhdpi-screen.png" />
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
     </platform>
-    <plugin name="cordova-plugin-appsflyer-sdk" spec="../.." />
+    <plugin name="cordova-plugin-appsflyer" spec="../.." />
 </widget>
