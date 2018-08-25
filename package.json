@@ -28,12 +28,15 @@
   ],
   "author": "DevDmitryHub",
   "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/DevDmitryHub/cordova-plugin-appsflyer/issues"
+  },
   "homepage": "https://github.com/DevDmitryHub/cordova-plugin-appsflyer#readme",
   "scripts": {
     "test": "npm run jshint",
     "jshint": "node node_modules/jshint/bin/jshint www && node node_modules/jshint/bin/jshint src && node node_modules/jshint/bin/jshint tests",
-    "preparedemo_a": "cd examples/demoA; cordova plugin rm cordova-plugin-appsflyer --save; cordova plugin add ../.. --save",
-    "preparedemo_c": "cd examples/demoC; cordova plugin rm cordova-plugin-appsflyer --save; cordova plugin add ../.. --save",
+    "preparedemo_a": "cd examples/demoA; cordova plugin rm cordova-plugin-appsflyer --save; cordova plugin add ../.. --save; cordova plugin rm cordova-plugin-appsflyer-tests --save; cordova plugin add ../../tests/",
+    "preparedemo_c": "cd examples/demoC; cordova plugin rm cordova-plugin-appsflyer --save; cordova plugin add ../.. --save; cordova plugin rm phonegap-plugin-push --save; cordova plugin add phonegap-plugin-push@1.7.0 --variable SENDER_ID=12345 --save; cordova plugin rm cordova-plugin-console --save; cordova plugin add cordova-plugin-console --save; cordova platform rm android; cordova platform add android; cordova platform rm ios; cordova platform add ios",
     "setup_a": "cd examples/demoA; npm install; cd ../..; npm run preparedemo_a;",
     "setup_c": "cd examples/demoC; npm install; cd ../..; npm run preparedemo_c;",
     "demo_a.run-android": "cd examples/demoA; ionic run android",
