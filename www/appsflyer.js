@@ -35,15 +35,15 @@
                 if (/iphone|ipad|ipod/.test( userAgent )) {
                     document.addEventListener("resume", this.onResume.bind(this), false);
      
-                    callbackMap = { suc: successCB,
-                                    err: errorCB
+                    callbackMap = { 
+                        suc: successCB,
+                        err: errorCB
                     };
                 }
             }
         };
      
         AppsFlyer.prototype.onResume = function() {
-            console.log("On Resume Registered by AppsFlyer Plugin");
             exec(callbackMap.suc, callbackMap.err, "AppsFlyerPlugin", "resumeSDK", []);
         };
 
@@ -84,8 +84,9 @@
         };
 
         /** @deprecated */
-        AppsFlyer.prototype.registerUninstall = function (token, succesCB, errorCB) {
-            this.enableUninstallTracking(token, succesCB, errorCB);
+        AppsFlyer.prototype.registerUninstall = function (token) {
+            argscheck.checkArgs('S', 'AppsFlyer.registerUninstall', arguments);
+            exec(null, null, "AppsFlyerPlugin", "registerUninstall", [token]);
         };
 
         AppsFlyer.prototype.handleOpenUrl = function (url) {
