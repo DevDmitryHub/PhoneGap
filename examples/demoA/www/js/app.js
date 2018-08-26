@@ -37,4 +37,4 @@ app.run(function ($ionicPlatform, $rootScope, $timeout) {
 
 var handleOpenURL = function(url) {
   window.plugins.appsFlyer.handleOpenUrl(url);
-}
+};

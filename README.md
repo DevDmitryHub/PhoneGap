@@ -2,8 +2,8 @@
 
 [![Version](https://img.shields.io/npm/v/cordova-plugin-appsflyer.svg?style=flat)](#)
 [![Cordova status](https://img.shields.io/badge/cordova-v5.x-blue.svg?style=flat)](#)
-[![AF-Android-SDK](https://img.shields.io/badge/AF%20Android%20SDK-v4.6.5-green.svg?style=flat)](#)
-[![AF-iOS-SDK](https://img.shields.io/badge/AF%20iOS%20SDK-v4.6.3-green.svg?style=flat)](#)
+[![AF-Android-SDK](https://img.shields.io/badge/AF%20Android%20SDK-v4.7.2-green.svg?style=flat)](#)
+[![AF-iOS-SDK](https://img.shields.io/badge/AF%20iOS%20SDK-v4.7.3-green.svg?style=flat)](#)
 [![NPM downloads](https://img.shields.io/npm/dt/cordova-plugin-appsflyer.svg?style=flat)](#)
 [![Github Issues](http://githubbadges.herokuapp.com/devdmitryhub/cordova-plugin-appsflyer/issues.svg)](https://github.com/devdmitryhub/cordova-plugin-appsflyer/issues)
 [![Build Status](https://api.travis-ci.org/DevDmitryHub/cordova-plugin-appsflyer.svg?branch=master)](https://travis-ci.org/DevDmitryHub/cordova-plugin-appsflyer)
@@ -142,11 +142,11 @@ you have to enable option `onInstallConversionDataListener` to `true` on `initSd
 
 **Android** - AppsFlyer requires a Google Project Number to enable uninstall tracking for Android apps.
 <a href="https://support.appsflyer.com/hc/en-us/articles/208004986-Android-Uninstall-Tracking">More Information</a>.
-Usage: `setGCMProjectID(GCMProjectNumber): void`.
+Usage: `setGCMProjectNumber(gcmProjectNumber): void`.
 
 **iOS** - AppsFlyer requires a Token to enable uninstall tracking for iOS apps.
  <a href="https://support.appsflyer.com/hc/en-us/articles/211211963-iOS-Uninstall-Tracking">More Information</a>.
-Usage: `registerUninstall(token): void`.
+Usage: `enableUninstallTracking(token, onSuccess, onError): void`.
 
 ## Deep Linking Tracking
 
@@ -154,7 +154,7 @@ Usage: `registerUninstall(token): void`.
 Since v.4.2.0 deeplinking metadata (scheme/host) is sent automatically
 
 #### iOS
-Add the following function `handleOpenUrl` to your root, and call our SDK as shown:
+Add the following function `handleOpenUrl` to your root, and call SDK as shown:
 ###### Example:
 ```javascript
 var handleOpenURL = function(url) {
@@ -167,6 +167,11 @@ var handleOpenURL = function(url) {
 This plugin has a `examples` folder with `demoA` (AngularJS 1.x) and `demoC` (Cordova) projects bundled with it. To give it a try , from root plugin folder execute following:
 
 ```sh
+# for Cordova
+npm run setup_c
+# for Angular
+npm run setup_a
+
 npm run <example>.<operation>
 ```
 **<example>**

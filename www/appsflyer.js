@@ -41,14 +41,12 @@
              argscheck.checkArgs('S', 'AppsFlyer.setAppUserId', arguments);
             exec(null, null, "AppsFlyerPlugin", "setAppUserId", [customerUserId]);
         };
-        AppsFlyer.prototype.setGCMProjectID = function (GCMProjectID) {
-            argscheck.checkArgs('S', 'AppsFlyer.setGCMProjectID', arguments);
-            exec(null, null, "AppsFlyerPlugin", "setGCMProjectID", [GCMProjectID]);
+
+        AppsFlyer.prototype.setGCMProjectNumber = function (gcmProjectNumber) {
+            argscheck.checkArgs('S', 'AppsFlyer.setGCMProjectNumber', arguments);
+            exec(null, null, "AppsFlyerPlugin", "setGCMProjectNumber", [gcmProjectNumber]);
         };
-        AppsFlyer.prototype.registerUninstall = function (token) {
-            argscheck.checkArgs('S', 'AppsFlyer.registerUninstall', arguments);
-            exec(null, null, "AppsFlyerPlugin", "registerUninstall", [token]);
-        };
+
         AppsFlyer.prototype.getAppsFlyerUID = function (successCB) {
             argscheck.checkArgs('F', 'AppsFlyer.getAppsFlyerUID', arguments);
             exec(function (result) {
@@ -62,6 +60,16 @@
         AppsFlyer.prototype.trackEvent = function (eventName, eventValue) {
             argscheck.checkArgs('SO', 'AppsFlyer.trackEvent', arguments);
             exec(null, null, "AppsFlyerPlugin", "trackEvent", [eventName, eventValue]);
+        };
+
+        AppsFlyer.prototype.enableUninstallTracking = function (gcmProjectNumber, successCB, errorCB) {
+            argscheck.checkArgs('S', 'AppsFlyer.enableUninstallTracking', arguments);
+            exec(successCB, errorCB, "AppsFlyerPlugin", "enableUninstallTracking", [gcmProjectNumber]);
+        };
+
+        /** @deprecated */
+        AppsFlyer.prototype.registerUninstall = function (token, succesCB, errorCB) {
+            this.enableUninstallTracking(token, succesCB, errorCB);
         };
 
         AppsFlyer.prototype.handleOpenUrl = function (url) {
