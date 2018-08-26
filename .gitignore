@@ -15,7 +15,6 @@ stash/
 node_modules/
 examples/demoA/.idea/**
 examples/demoA/node_modules/
-examples/demoA/www/lib/
 .idea/**
 test/.idea/**
 test/android/.idea/**

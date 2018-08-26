@@ -3,6 +3,9 @@
         argscheck = require('cordova/argscheck'),
         appsFlyerError = require('./AppsFlyerError');
 
+    var userAgent = window.navigator.userAgent.toLowerCase();
+    var callbackMap = {};
+
     if (!window.CustomEvent) {
         window.CustomEvent = function (type, config) {
             var e = document.createEvent("CustomEvent");
@@ -10,7 +13,7 @@
             return e;
         };
     }
-
+               
     (function (global) {
         var AppsFlyer = function () {};
 
@@ -24,13 +27,26 @@
             } else {
                 if(args.appId !== undefined && typeof args.appId != 'string'){
                     if (errorCB) {
-                        errorCB(appsFlyerError.APPID_NOT_VALID);
-                    }
+                      errorCB(appsFlyerError.APPID_NOT_VALID);
+                   }
+                 }
+                 exec(successCB, errorCB, "AppsFlyerPlugin", "initSdk", [args]);
+     
+                if (/iphone|ipad|ipod/.test( userAgent )) {
+                    document.addEventListener("resume", this.onResume.bind(this), false);
+     
+                    callbackMap = { suc: successCB,
+                                    err: errorCB
+                    };
                 }
-
-                exec(successCB, errorCB, "AppsFlyerPlugin", "initSdk", [args]);
             }
         };
+     
+        AppsFlyer.prototype.onResume = function() {
+            console.log("On Resume Registered by AppsFlyer Plugin");
+            exec(callbackMap.suc, callbackMap.err, "AppsFlyerPlugin", "resumeSDK", []);
+        };
+
 
         AppsFlyer.prototype.setCurrencyCode = function (currencyId) {
             argscheck.checkArgs('S', 'AppsFlyer.setCurrencyCode', arguments);
