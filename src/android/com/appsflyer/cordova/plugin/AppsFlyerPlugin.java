@@ -15,6 +15,7 @@ import org.json.JSONException;
 
 import com.appsflyer.AppsFlyerConversionListener;
 import com.appsflyer.AppsFlyerLib;
+import com.appsflyer.AppsFlyerProperties;
 
 import android.content.Context;
 import android.content.Intent;
@@ -88,6 +89,7 @@ public class AppsFlyerPlugin extends CordovaPlugin {
      */
 	private boolean initSdk(final JSONArray args, final CallbackContext callbackContext) {
 
+		AppsFlyerProperties.getInstance().set(AppsFlyerProperties.LAUNCH_PROTECT_ENABLED, false);
 		AppsFlyerLib instance = AppsFlyerLib.getInstance();
 
 		try {

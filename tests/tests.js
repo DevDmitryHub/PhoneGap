@@ -42,14 +42,14 @@ exports.defineAutoTests = function () {
             expect(typeof window.plugins.appsFlyer.setAppUserId).toBe('function');
         });
 
-        it("appsFlyer.setGCMProjectID method", function () {
-            expect(window.plugins.appsFlyer.setGCMProjectID).toBeDefined();
-            expect(typeof window.plugins.appsFlyer.setGCMProjectID).toBe('function');
+        it("appsFlyer.setGCMProjectNumber method", function () {
+            expect(window.plugins.appsFlyer.setGCMProjectNumber).toBeDefined();
+            expect(typeof window.plugins.appsFlyer.setGCMProjectNumber).toBe('function');
         });
 
-        it("appsFlyer.registerUninstall method", function () {
-            expect(window.plugins.appsFlyer.registerUninstall).toBeDefined();
-            expect(typeof window.plugins.appsFlyer.registerUninstall).toBe('function');
+        it("appsFlyer.enableUninstallTracking method", function () {        
+            expect(window.plugins.appsFlyer.enableUninstallTracking).toBeDefined();
+            expect(typeof window.plugins.appsFlyer.enableUninstallTracking).toBe('function');
         });
 
         it("appsFlyer.getAppsFlyerUID method", function () {

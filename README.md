@@ -2,7 +2,7 @@
 
 [![Version](https://img.shields.io/npm/v/cordova-plugin-appsflyer.svg?style=flat)](#)
 [![Cordova status](https://img.shields.io/badge/cordova-v5.x-blue.svg?style=flat)](#)
-[![AF-Android-SDK](https://img.shields.io/badge/AF%20Android%20SDK-v4.7.1-green.svg?style=flat)](#)
+[![AF-Android-SDK](https://img.shields.io/badge/AF%20Android%20SDK-v4.7.2-green.svg?style=flat)](#)
 [![AF-iOS-SDK](https://img.shields.io/badge/AF%20iOS%20SDK-v4.7.3-green.svg?style=flat)](#)
 [![NPM downloads](https://img.shields.io/npm/dt/cordova-plugin-appsflyer.svg?style=flat)](#)
 [![Github Issues](http://githubbadges.herokuapp.com/devdmitryhub/cordova-plugin-appsflyer/issues.svg)](https://github.com/devdmitryhub/cordova-plugin-appsflyer/issues)
@@ -146,7 +146,7 @@ Usage: `setGCMProjectNumber(gcmProjectNumber): void`.
 
 **iOS** - AppsFlyer requires a Token to enable uninstall tracking for iOS apps.
  <a href="https://support.appsflyer.com/hc/en-us/articles/211211963-iOS-Uninstall-Tracking">More Information</a>.
-Usage: `registerUninstall(token): void`.
+Usage: `enableUninstallTracking(token, onSuccess, onError): void`.
 
 ## Deep Linking Tracking
 
