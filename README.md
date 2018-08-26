@@ -2,8 +2,8 @@
 
 [![Version](https://img.shields.io/npm/v/cordova-plugin-appsflyer.svg?style=flat)](#)
 [![Cordova status](https://img.shields.io/badge/cordova-v5.x-blue.svg?style=flat)](#)
-[![AF-Android-SDK](https://img.shields.io/badge/AF%20Android%20SDK-v4.7.2-green.svg?style=flat)](#)
-[![AF-iOS-SDK](https://img.shields.io/badge/AF%20iOS%20SDK-v4.7.3-green.svg?style=flat)](#)
+[![AF-Android-SDK](https://img.shields.io/badge/AF%20Android%20SDK-v4.7.4-green.svg?style=flat)](#)
+[![AF-iOS-SDK](https://img.shields.io/badge/AF%20iOS%20SDK-v4.7.11-green.svg?style=flat)](#)
 [![NPM downloads](https://img.shields.io/npm/dt/cordova-plugin-appsflyer.svg?style=flat)](#)
 [![Github Issues](http://githubbadges.herokuapp.com/devdmitryhub/cordova-plugin-appsflyer/issues.svg)](https://github.com/devdmitryhub/cordova-plugin-appsflyer/issues)
 [![Build Status](https://api.travis-ci.org/DevDmitryHub/cordova-plugin-appsflyer.svg?branch=master)](https://travis-ci.org/DevDmitryHub/cordova-plugin-appsflyer)
