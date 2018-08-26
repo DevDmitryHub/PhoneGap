@@ -47,7 +47,6 @@
             exec(callbackMap.suc, callbackMap.err, "AppsFlyerPlugin", "resumeSDK", []);
         };
 
-
         AppsFlyer.prototype.setCurrencyCode = function (currencyId) {
             argscheck.checkArgs('S', 'AppsFlyer.setCurrencyCode', arguments);
             exec(null, null, "AppsFlyerPlugin", "setCurrencyCode", [currencyId]);
@@ -68,9 +67,10 @@
             exec(function (result) {
                 successCB(result);
             }, null,
-                    "AppsFlyerPlugin",
-                    "getAppsFlyerUID",
-                    []);
+                "AppsFlyerPlugin",
+                "getAppsFlyerUID",
+                []
+            );
         };
 
         AppsFlyer.prototype.trackEvent = function (eventName, eventValue) {

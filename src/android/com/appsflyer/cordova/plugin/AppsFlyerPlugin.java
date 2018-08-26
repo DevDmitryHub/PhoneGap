@@ -64,7 +64,7 @@ public class AppsFlyerPlugin extends CordovaPlugin {
 		else if ("trackEvent".equals(action)) {
 			return trackEvent(args, callbackContext);
 		}
-		else if ("setGCMProjectID".equals(action)) {
+		else if ("setGCMProjectNumber".equals(action)) {
 			return setGCMProjectNumber(args);
 		}
 		else if("enableUninstallTracking".equals(action))
