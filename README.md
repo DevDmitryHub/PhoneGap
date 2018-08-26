@@ -51,7 +51,7 @@ Built against `Phonegap >= 4.3.x.` `Cordova >= 4.3.x.`
 Add the following line to your config xml:
 
 ```xml
-<gap:plugin name="cordova-plugin-appsflyer" version="4.2.3" />
+<gap:plugin name="cordova-plugin-appsflyer" version="4.2.17" />
 ```
 
 ## Usage API
@@ -143,10 +143,12 @@ you have to enable option `onInstallConversionDataListener` to `true` on `initSd
 **Android** - AppsFlyer requires a Google Project Number to enable uninstall tracking for Android apps.
 <a href="https://support.appsflyer.com/hc/en-us/articles/208004986-Android-Uninstall-Tracking">More Information</a>.
 Usage: `setGCMProjectNumber(gcmProjectNumber): void`.
+Usage: `enableUninstallTracking(token, onSuccess, onError): void`.
 
 **iOS** - AppsFlyer requires a Token to enable uninstall tracking for iOS apps.
  <a href="https://support.appsflyer.com/hc/en-us/articles/211211963-iOS-Uninstall-Tracking">More Information</a>.
 Usage: `enableUninstallTracking(token, onSuccess, onError): void`.
+Usage: `registerUninstall(token): void`.
 
 ## Deep Linking Tracking
 
