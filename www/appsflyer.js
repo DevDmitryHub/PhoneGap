@@ -1,141 +1,83 @@
-if(!window.CustomEvent) {
-	window.CustomEvent = function(type, config) {
-		var e = document.createEvent("CustomEvent");
-		e.initCustomEvent(type, true, true, config.detail);
-		return e;
-	}
-}
-(function (global, platform) {
-	/** @constructor */
-	var PromiseDecorator = function(appsFlyer) {
-		this.appsFlyer = appsFlyer;
-		this.dataLoadedPromise = null;
-	};
 
-	/**
-	 * @private
-	 * @param {Function} resolve
-	 */
-	var subscribeOnInstallDataLoaded_ = function (resolve) {
-		document.addEventListener("onInstallConversionDataLoaded", function (data) {
-			resolve(data);
-		}, false);
-	};
+    var exec = require('cordova/exec'),
+        argscheck = require('cordova/argscheck'),
+        appsFlyerError = require('./AppsFlyerError');
 
-	var installData_ = null, deviceId_ = null;
+    if (!window.CustomEvent) {
+        window.CustomEvent = function (type, config) {
+            var e = document.createEvent("CustomEvent");
+            e.initCustomEvent(type, true, true, config.detail);
+            return e;
+        };
+    }
 
-	PromiseDecorator.prototype.init = function (args) {
-		this.initSdk = new Promise(function (resolve, reject) {
-			document.addEventListener("deviceready", function () {
-				this.appsFlyer.initSdk(args);
-				resolve();
-			}.bind(this), false);
-		}.bind(this));
-		this.dataLoadedPromise = new Promise(function (resolve, reject) {
-			try {
-				subscribeOnInstallDataLoaded_(resolve);
-			} catch (e) {
-				reject(null);
-			}
-		});
-		this.deviceIdPromise = new Promise(function (resolve, reject) {
-			try {
-				this.whenSDKInited().then(function () {
-					this.appsFlyer.getAppsFlyerUID(function (deviceId) {
-						resolve(deviceId);
-					});
-				}.bind(this)).catch(function () {
-					reject(null);
-				});
-			} catch (e) {
-				reject(null);
-			}
-		}.bind(this));
+    (function (global) {
+        var AppsFlyer = function () {};
 
-		this.whenInstallDataLoaded().then(function (data) {
-			installData_ = data;
-		});
-		this.whenDeviceIdReady().then(function (deviceId) {
-			deviceId_ = deviceId;
-		});
+        AppsFlyer.prototype.initSdk = function (args, successCB, errorCB) {
+            argscheck.checkArgs('O', 'AppsFlyer.initSdk', arguments);
 
-		return this;
-	};
+            if (!args) {
+                if (errorCB) {
+                    errorCB(appsFlyerError.INVALID_ARGUMENTS_ERROR);
+                }
+            } else {
+                if(args.appId !== undefined && typeof args.appId != 'string'){
+                    if (errorCB) {
+                        errorCB(appsFlyerError.APPID_NOT_VALID);
+                    }
+                }
 
-	PromiseDecorator.prototype.whenInstallDataLoaded = function () {
-		return this.dataLoadedPromise;
-	};
+                exec(successCB, errorCB, "AppsFlyerPlugin", "initSdk", [args]);
+            }
+        };
 
-	PromiseDecorator.prototype.whenDeviceIdReady = function () {
-		return this.deviceIdPromise;
-	};
+        AppsFlyer.prototype.setCurrencyCode = function (currencyId) {
+            argscheck.checkArgs('S', 'AppsFlyer.setCurrencyCode', arguments);
+            exec(null, null, "AppsFlyerPlugin", "setCurrencyCode", [currencyId]);
+        };
 
-	PromiseDecorator.prototype.whenSDKInited = function () {
-		return this.initSdk;
-	};
+        AppsFlyer.prototype.setAppUserId = function (customerUserId) {
+             argscheck.checkArgs('S', 'AppsFlyer.setAppUserId', arguments);
+            exec(null, null, "AppsFlyerPlugin", "setAppUserId", [customerUserId]);
+        };
+        AppsFlyer.prototype.setGCMProjectID = function (GCMProjectID) {
+            argscheck.checkArgs('S', 'AppsFlyer.setGCMProjectID', arguments);
+            exec(null, null, "AppsFlyerPlugin", "setGCMProjectID", [GCMProjectID]);
+        };
+        AppsFlyer.prototype.registerUninstall = function (token) {
+            argscheck.checkArgs('S', 'AppsFlyer.registerUninstall', arguments);
+            exec(null, null, "AppsFlyerPlugin", "registerUninstall", [token]);
+        };
+        AppsFlyer.prototype.getAppsFlyerUID = function (successCB) {
+            argscheck.checkArgs('F', 'AppsFlyer.getAppsFlyerUID', arguments);
+            exec(function (result) {
+                successCB(result);
+            }, null,
+                    "AppsFlyerPlugin",
+                    "getAppsFlyerUID",
+                    []);
+        };
 
-	PromiseDecorator.prototype.getInstallConversionData = function () {
-		return installData_;
-	};
+        AppsFlyer.prototype.trackEvent = function (eventName, eventValue) {
+            argscheck.checkArgs('SO', 'AppsFlyer.trackEvent', arguments);
+            exec(null, null, "AppsFlyerPlugin", "trackEvent", [eventName, eventValue]);
+        };
 
-	PromiseDecorator.prototype.getDeviceId = function () {
-		return deviceId_;
-	};
+        AppsFlyer.prototype.handleOpenUrl = function (url) {
+            argscheck.checkArgs('*', 'AppsFlyer.handleOpenUrl', arguments);
+            exec(null, null, "AppsFlyerPlugin", "handleOpenUrl", [url]);
+        };
 
+        global.cordova.addConstructor(function () {
+            if (!global.Cordova) {
+                global.Cordova = global.cordova;
+            }
 
-	/** @constructor */
-	var AppsFlyer = function () {
-	};
+            if (!global.plugins) {
+                global.plugins = {};
+            }
 
-	AppsFlyer.prototype.initSdk = function (args) {
-    	platform.exec(null, null, "AppsFlyerPlugin", "initSdk", args);
-	};
-	
-	AppsFlyer.prototype.setCurrencyCode = function (currencyId) {
-    	platform.exec(null, null, "AppsFlyerPlugin", "setCurrencyCode", [currencyId]);
-	};
-	
-	AppsFlyer.prototype.setAppUserId = function (customerUserId) {
-    	platform.exec(null, null, "AppsFlyerPlugin", "setAppUserId", [customerUserId]);
-	};
-
-	AppsFlyer.prototype.getAppsFlyerUID = function (callbackFn) {
-        platform.exec(function(result){
-            callbackFn(result);
-        }, null,
-           "AppsFlyerPlugin",
-           "getAppsFlyerUID",
-        []);
-	};
-	
-	AppsFlyer.prototype.trackEvent = function(eventName, eventValue) {
-    	platform.exec(null, null, "AppsFlyerPlugin", "trackEvent", [eventName,eventValue]);
-	};
-
-	AppsFlyer.prototype.onInstallConversionDataLoaded = function(conversionData) {
-        var data = conversionData,
-            event;
-        if (typeof data === "string") {
-            data = JSON.parse(conversionData);
-        }
-		event = new CustomEvent('onInstallConversionDataLoaded', {'detail': data});
-		global.document.dispatchEvent(event);
-	};
-
-	AppsFlyer.prototype.usePromises = function () {
-		return new PromiseDecorator(this);
-	};
-
-	platform.addConstructor(function() {
-		if (!global.Cordova) {
-			global.Cordova = platform;
-		}
-
-		if (!global.plugins) {
-			global.plugins = {};
-		}
-
-		global.plugins.appsFlyer = new AppsFlyer();
-	});
-}(window, window.cordova));
-
+            global.plugins.appsFlyer = new AppsFlyer();
+        });
+    }(window));

@@ -21,21 +21,23 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-appsflyer"
-        version="4.0.1">
+        version="4.2.17">
     <name>AppsFlyer</name>
-    <description>Cordova plugin for integration with AppsFlyer SDK. It's a fork of the official version from AppsFlyer.</description>
+    <description>Cordova Plugin AppsFlyer</description>
     <license>Apache 2.0</license>
     <keywords>cordova,appsflyer</keywords>
-    <repo>https://github.com/DevDmitryHub/cordova-plugin-appsflyer.git</repo>
-
+    <repo>https://github.com/AppsFlyerSDK/cordova-plugin-appsflyer-sdk.git</repo>
     <engines>
         <engine name="cordova" version=">=4.3.0"/>
     </engines>
 
-	<js-module src="www/appsflyer.js" name="appsflyer">
-		<clobbers target="window.plugins.appsFlyer" />
-	</js-module>
+    <js-module src="www/appsflyer.js" name="appsflyer">
+        <clobbers target="window.plugins.appsFlyer" />
+    </js-module>
 
+    <js-module src="www/AppsFlyerError.js" name="AppsFlyerError">
+        <clobbers target="AppsFlyerError" />
+    </js-module>
 
     <!-- android -->
     <platform name="android">
@@ -47,7 +49,6 @@
         <config-file target="AndroidManifest.xml" parent="/manifest">
             <uses-permission android:name="android.permission.INTERNET"/>
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-            <uses-permission android:name="android.permission.READ_PHONE_STATE" />
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <receiver android:name="com.appsflyer.MultipleInstallBroadcastReceiver" android:exported="true">
@@ -57,24 +58,27 @@
             </receiver>
         </config-file>
 
-        <source-file src="platform/android/com/appsflyer/cordova/plugin/AppsFlyerPlugin.java" target-dir="src/com/appsflyer/cordova/plugin" />
-        <source-file src="platform/android/libs/AF-Android-SDK-v4.3.2.jar" target-dir="libs"/>
+        <source-file src="src/android/com/appsflyer/cordova/plugin/AppsFlyerPlugin.java" target-dir="src/com/appsflyer/cordova/plugin" />
+        <source-file src="src/android/com/appsflyer/cordova/plugin/AppsFlyerConstants.java" target-dir="src/com/appsflyer/cordova/plugin" />
+        <source-file src="src/android/libs/AF-Android-SDK.jar" target-dir="libs"/>
 
+        <framework src="src/android/cordovaAF.gradle" custom="true" type="gradleReference" />
         <framework src="com.google.android.gms:play-services-ads:+" />
     </platform>
 
     <!-- ios -->
-    <platform name="ios">    
+    <platform name="ios">        
         <config-file target="config.xml" parent="/*">
             <feature name="AppsFlyerPlugin">
                 <param name="ios-package" value="AppsFlyerPlugin" />
             </feature>
         </config-file>
 
-        <header-file src="platform/ios/AppsFlyerPlugin.h" />
-        <header-file src="platform/ios/AppsFlyerTracker.h" />
-        <source-file src="platform/ios/AppsFlyerPlugin.m" />
-        <source-file src="platform/ios/libAppsFlyerLib.a" compiler-flags="-lAppsFlyerLib" framework="true" />
+        <header-file src="src/ios/AppsFlyerPlugin.h" />
+        <header-file src="src/ios/AppsFlyerTracker.h" />
+        <source-file src="src/ios/AppsFlyerPlugin.m" />
+        <source-file src="src/ios/libAppsFlyerLib.a" compiler-flags="-lAppsFlyerLib" framework="true" />
+
         <framework src="AdSupport.framework" weak="true" />
         <framework src="iAd.framework" weak="true" />
         <framework src="Security.framework" weak="true" />

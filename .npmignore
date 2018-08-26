@@ -1,0 +1,6 @@
+exmaples/
+.idea/
+node_modules/
+*.log
+*.json
+.*.*

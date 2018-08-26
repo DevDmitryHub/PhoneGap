@@ -1,5 +1,0 @@
-// GENERATED FILE - DO NOT EDIT
-include ":"
-include ":CordovaLib"
-include ":com.google.playservices:google-play-services_lib"
-project(":com.google.playservices:google-play-services_lib").projectDir = new File("com.google.playservices/helloworld-google-play-services_lib")

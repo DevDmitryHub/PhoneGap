@@ -1,7 +1,7 @@
 {
   "name": "cordova-plugin-appsflyer",
-  "version": "4.0.1",
-  "description": "Cordova plugin for integration with AppsFlyer SDK. It's a fork of the official version from AppsFlyer.",
+  "version": "4.2.17",
+  "description": "Cordova plugin for integration with AppsFlyer SDK. It's a fork with some changes of the official version from AppsFlyer.",
   "cordova": {
     "id": "cordova-plugin-appsflyer",
     "platforms": [
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/DevDmitryHub/cordova-plugin-appsflyer"
+    "url": "git+https://github.com/DevDmitryHub/cordova-plugin-appsflyer"
   },
   "keywords": [
     "cordova",
@@ -20,7 +20,32 @@
     "cordova-android",
     "cordova-ios"
   ],
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=4.3.0"
+    }
+  ],
   "author": "DevDmitryHub",
   "license": "Apache 2.0",
-  "homepage": "https://github.com/DevDmitryHub/cordova-plugin-appsflyer#readme"
+  "homepage": "https://github.com/DevDmitryHub/cordova-plugin-appsflyer#readme",
+  "scripts": {
+    "test": "npm run jshint",
+    "jshint": "node node_modules/jshint/bin/jshint www && node node_modules/jshint/bin/jshint src && node node_modules/jshint/bin/jshint tests",
+    "preparedemo_a": "cd examples/demoA; cordova plugin rm cordova-plugin-appsflyer --save; cordova plugin add ../.. --save",
+    "preparedemo_c": "cd examples/demoC; cordova plugin rm cordova-plugin-appsflyer --save; cordova plugin add ../.. --save",
+    "setup_a": "cd examples/demoA; npm install; cd ../..; npm run preparedemo_a;",
+    "setup_c": "cd examples/demoC; npm install; cd ../..; npm run preparedemo_c;",
+    "demo_a.run-android": "cd examples/demoA; ionic run android",
+    "demo_a.build-android": "cd examples/demoA; ionic build android",
+    "demo_a.run-ios": "cd examples/demoA; ionic run ios",
+    "demo_a.build-ios": "cd examples/demoA; ionic build ios",
+    "demo_c.run-android": "cd examples/demoC; cordova run android",
+    "demo_c.build-android": "cd examples/demoC; cordova build android",
+    "demo_c.run-ios": "cd examples/demoC; cordova run ios",
+    "demo_c.build-ios": "cd examples/demoC; cordova build ios"
+  },
+  "devDependencies": {
+    "jshint": "^2.6.0"
+  }
 }
