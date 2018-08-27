@@ -1,5 +1,6 @@
 #import "AppsFlyerPlugin.h"
 #import "AppsFlyerTracker.h"
+#import "AppDelegate.h"
 
 @implementation AppsFlyerPlugin
 
@@ -117,6 +118,21 @@ static NSString *const SUCCESS         = @"Success";
     [AppsFlyerTracker sharedTracker].customerUserID  = userId;
 }
 
+- (void)setDeviceTrackingDisabled:(CDVInvokedUrlCommand *)command
+{
+    if ([command.arguments count] == 0) {
+        return;
+    }
+    
+    BOOL isDisValueBool = NO;
+    id isDisValue = nil;
+    isDisValue = [command.arguments objectAtIndex:0];
+    if ([isDisValue isKindOfClass:[NSNumber class]]) {
+        isDisValueBool = [(NSNumber*)isDisValue boolValue];
+        [AppsFlyerTracker sharedTracker].deviceTrackingDisabled  = isDisValueBool;
+    }
+}
+
 - (void)getAppsFlyerUID:(CDVInvokedUrlCommand *)command
 {
     NSString* userId = [[AppsFlyerTracker sharedTracker] getAppsFlyerUID];
@@ -177,7 +193,7 @@ static NSString *const SUCCESS         = @"Success";
     NSDictionary* errorMessage = @{
                                    @"status": afFailure,
                                    @"type": afOnInstallConversionFailure,
-                                   @"data": _errorMessage
+                                   @"data": _errorMessage.localizedDescription
                                    };
 
     [self performSelectorOnMainThread:@selector(handleCallback:) withObject:errorMessage waitUntilDone:NO];
@@ -200,7 +216,7 @@ static NSString *const SUCCESS         = @"Success";
     NSDictionary* errorMessage = @{
                                    @"status": afFailure,
                                    @"type": afOnAttributionFailure,
-                                   @"data": _errorMessage
+                                   @"data": _errorMessage.localizedDescription
                                    };
 
     [self performSelectorOnMainThread:@selector(handleCallback:) withObject:errorMessage waitUntilDone:NO];
@@ -273,3 +289,23 @@ static NSString *const SUCCESS         = @"Success";
 
 
 @end
+
+
+// Universal Links Support - AppDelegate interface:
+@interface AppDelegate (AppsFlyerPlugin)
+
+- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray * _Nullable))restorationHandler;
+
+@end
+
+// Universal Links Support - AppDelegate implementation:
+@implementation AppDelegate (AppsFlyerPlugin)
+
+- (BOOL) application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *_Nullable))restorationHandler
+{
+    [[AppsFlyerTracker sharedTracker] continueUserActivity:userActivity restorationHandler:restorationHandler];
+    return YES;
+}
+
+@end
+

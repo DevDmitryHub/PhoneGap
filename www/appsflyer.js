@@ -3,7 +3,6 @@
         argscheck = require('cordova/argscheck'),
         appsFlyerError = require('./AppsFlyerError');
 
-    var userAgent = window.navigator.userAgent.toLowerCase();
     var callbackMap = {};
 
     if (!window.CustomEvent) {
@@ -32,14 +31,14 @@
                  }
                  exec(successCB, errorCB, "AppsFlyerPlugin", "initSdk", [args]);
      
-                if (/iphone|ipad|ipod/.test( userAgent )) {
-                    document.addEventListener("resume", this.onResume.bind(this), false);
-     
-                    callbackMap = { 
-                        suc: successCB,
-                        err: errorCB
-                    };
-                }
+
+                document.addEventListener("resume", this.onResume.bind(this), false);
+
+                callbackMap = {
+                    suc: successCB,
+                    err: errorCB
+                };
+
             }
         };
      
@@ -71,6 +70,11 @@
                 "getAppsFlyerUID",
                 []
             );
+        };
+
+        AppsFlyer.prototype.setDeviceTrackingDisabled = function (isDisabled) {
+            argscheck.checkArgs('*', 'AppsFlyer.setDeviceTrackingDisabled', arguments);
+            exec(null,null,"AppsFlyerPlugin","setDeviceTrackingDisabled", [isDisabled]);
         };
 
         AppsFlyer.prototype.trackEvent = function (eventName, eventValue) {

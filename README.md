@@ -138,6 +138,14 @@ Read more: [Android](http://support.appsflyer.com/entries/69796693-Accessing-App
 **Note:** AppsFlyer plugin replaced event `onInstallConversionDataLoaded` by using listener `onInstallConversionDataListener` if you want use it,
 you have to enable option `onInstallConversionDataListener` to `true` on `initSdk` and handle information.
 
+#### 7\. End User Opt-Out. Device Tracking Disabled
+AppsFlyer provides you a method to opt‐out specific users from AppsFlyer analytics. This method complies with the latest privacy requirements and complies with Facebook data and privacy policies. Default is FALSE, meaning tracking is enabled by default.
+
+###### Example:
+```javascript
+window.plugins.appsFlyer.setDeviceTrackingDisabled(true);
+```
+
 ## Uninstall Tracking
 
 **Android** - AppsFlyer requires a Google Project Number to enable uninstall tracking for Android apps.
@@ -163,6 +171,21 @@ var handleOpenURL = function(url) {
     window.plugins.appsFlyer.handleOpenUrl(url);
 }
 ```
+**Universal Links in iOS**
+
+To enable Universal Links in iOS please follow the guide <a href="https://support.appsflyer.com/hc/en-us/articles/207032266-Setting-Deeplinking-on-iOS9-using-iOS-Universal-Links">here</a>.
+
+**Note**: Our plugin utilizes the
+
+ ` - (BOOL)application:(UIApplication *)application
+ continueUserActivity:(NSUserActivity *)userActivity
+ restorationHandler:(void (^)(NSArray * _Nullable))restorationHandler; `
+
+##### method for Universal Links support.
+
+***If additional instances of the method exist in your code - merge all calls into one***
+
+**(Available on cordova-plugin-appsflyer-sdk 4.2.24 and higher )**
 
 ## Sample App
 
