@@ -56,7 +56,7 @@
             exec(null, null, "AppsFlyerPlugin", "setAppUserId", [customerUserId]);
         };
 
-        AppsFlyer.prototype.setGCMProjectNumber = function (gcmProjectNumber) {
+        AppsFlyer.prototype.setGCMProjectID = function (gcmProjectNumber) {
             argscheck.checkArgs('S', 'AppsFlyer.setGCMProjectNumber', arguments);
             exec(null, null, "AppsFlyerPlugin", "setGCMProjectNumber", [gcmProjectNumber]);
         };
