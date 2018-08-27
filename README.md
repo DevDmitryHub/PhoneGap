@@ -150,12 +150,15 @@ window.plugins.appsFlyer.setDeviceTrackingDisabled(true);
 
 **Android** - AppsFlyer requires a Google Project Number to enable uninstall tracking for Android apps.
 <a href="https://support.appsflyer.com/hc/en-us/articles/208004986-Android-Uninstall-Tracking">More Information</a>.
-Usage: `setGCMProjectNumber(gcmProjectNumber): void`.
+
+Usage: `setGCMProjectID(gcmProjectNumber): void //@Deprecated `.
+
 Usage: `enableUninstallTracking(token, onSuccess, onError): void`.
 
 **iOS** - AppsFlyer requires a Token to enable uninstall tracking for iOS apps.
  <a href="https://support.appsflyer.com/hc/en-us/articles/211211963-iOS-Uninstall-Tracking">More Information</a>.
 Usage: `enableUninstallTracking(token, onSuccess, onError): void`.
+
 Usage: `registerUninstall(token): void`.
 
 ## Deep Linking Tracking
