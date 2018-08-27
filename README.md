@@ -188,7 +188,7 @@ To enable Universal Links in iOS please follow the guide <a href="https://suppor
 
 ***If additional instances of the method exist in your code - merge all calls into one***
 
-**(Available on cordova-plugin-appsflyer-sdk 4.2.24 and higher )**
+**(Available on cordova-plugin-appsflyer 4.3.2 and higher )**
 
 ## Sample App
 
